@@ -3,15 +3,24 @@
 
 #include <QWidget>
 
+#include <QLabel>
+#include <QCheckBox>
+#include <QLineEdit>
+#include <QLayout>
+
 class MyListWidgetItem : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MyListWidgetItem(QWidget *parent = nullptr);
+    explicit MyListWidgetItem(QString item, size_t count, bool checked, QWidget *parent = nullptr);
 
 signals:
 
 public slots:
+private:
+    QString m_item;
+    size_t m_count;
+    bool m_checked;
 };
 
 #endif // MYLISTWIDGETITEM_H

@@ -11,20 +11,37 @@ MyListWidget::MyListWidget(QString name, QStringList items, QWidget *parent) :
 
     QFrame* container = new QFrame(this);
     container->setLayout(new QVBoxLayout(container));
-    //container->layout()->setSpacing(0);
-    //container->layout()->setContentsMargins(0, 0, 0, 0);
+    container->layout()->setContentsMargins(0, 0, 0, 0);
 
     QLabel* title = new QLabel(m_listName, container);
     title->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     container->layout()->addWidget(title);
-
-    QListWidget* list = new QListWidget(container);
-    for(auto item : m_items)
-    {
-        list->addItem(item);
-    }
-
-    container->layout()->addWidget(list);
-
+        QFrame* mainFrame = new QFrame(container);
+        mainFrame->setLayout(new QHBoxLayout(mainFrame));
+        mainFrame->layout()->setContentsMargins(0, 0, 0, 0);
+            QFrame* actionsFrame = new QFrame(mainFrame);
+            actionsFrame->setLayout(new QVBoxLayout(actionsFrame));
+            actionsFrame->layout()->setContentsMargins(0, 0, 0, 0);
+            actionsFrame->layout()->setAlignment(Qt::AlignTop);
+                QPushButton* addButton = new QPushButton("+", actionsFrame);
+                actionsFrame->layout()->addWidget(addButton);
+                QPushButton* deleteButton = new QPushButton("-", actionsFrame);
+                actionsFrame->layout()->addWidget(deleteButton);
+            mainFrame->layout()->addWidget(actionsFrame);
+            QFrame* listFrame = new QFrame(mainFrame);
+            listFrame->setLayout(new QVBoxLayout(listFrame));
+            listFrame->layout()->setContentsMargins(0, 0, 0, 0);
+                QListWidget* list = new QListWidget(container);
+                for(auto item : m_items)
+                {
+                    QListWidgetItem* listItem = new QListWidgetItem(list);
+                    MyListWidgetItem* widget = new MyListWidgetItem(item, 1, false, list);
+                    listItem->setSizeHint(widget->minimumSizeHint());
+                    list->addItem(listItem);
+                    list->setItemWidget(listItem, widget);
+                }
+                listFrame->layout()->addWidget(list);
+            mainFrame->layout()->addWidget(listFrame);
+        container->layout()->addWidget(mainFrame);
     this->layout()->addWidget(container);
 }

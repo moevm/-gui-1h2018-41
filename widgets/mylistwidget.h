@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QCheckBox>
 
+#include "widgets/mylistwidgetitem.h"
+
 class MyListWidget : public QWidget
 {
     Q_OBJECT

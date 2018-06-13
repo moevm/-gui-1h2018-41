@@ -6,10 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    initWidgets();
-
     this->showMaximized();
+    initWidgets();
 }
 
 MainWindow::~MainWindow()
@@ -21,15 +19,11 @@ void MainWindow::initWidgets()
 {
     QStringList exampleList = {"123", "test", "asd"};
 
-    QMdiSubWindow* w1 = new QMdiSubWindow(ui->mdiArea);
-    MyListWidget* myList1 = new MyListWidget("List 1", exampleList, w1);
-    w1->setWidget(myList1);
-    QMdiSubWindow* w2 = new QMdiSubWindow(ui->mdiArea);
-    MyListWidget* myList2 = new MyListWidget("List 2", exampleList, w2);
-    w2->setWidget(myList2);
-
-    QMdiSubWindow* w3 = new QMdiSubWindow(ui->mdiArea);
-    MyListWidget* myList3 = new MyListWidget("List 3", exampleList, w3);
-    w3->setWidget(myList3);
-
+    for(int i = 0; i < 10; i++)
+    {
+        QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
+        MyListWidget* myList = new MyListWidget(QStringLiteral("List") + QString::number(i), exampleList, w);
+        w->setWidget(myList);
+        w->show();
+    }
 }

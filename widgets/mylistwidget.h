@@ -7,6 +7,7 @@
 #include <QLayout>
 #include <QLabel>
 #include <QCheckBox>
+#include <QDebug>
 
 #include "widgets/mylistwidgetitem.h"
 
@@ -16,12 +17,20 @@ class MyListWidget : public QWidget
 public:
     explicit MyListWidget(QString name, QStringList items, QWidget *parent = nullptr);
 
-signals:
-
-public slots:
 private:
     QString m_listName;
     QStringList m_items;
+
+    QListWidget* m_listWidget;
+    void updateList();
+
+signals:
+
+public slots:
+
+private slots:
+    void addItem();
+    void deleteItem();
 };
 
 #endif // MYLISTWIDGET_H

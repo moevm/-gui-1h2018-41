@@ -24,24 +24,46 @@ MyListWidget::MyListWidget(QString name, QStringList items, QWidget *parent) :
             actionsFrame->layout()->setContentsMargins(0, 0, 0, 0);
             actionsFrame->layout()->setAlignment(Qt::AlignTop);
                 QPushButton* addButton = new QPushButton("+", actionsFrame);
+                QObject::connect(addButton, SIGNAL(clicked(bool)), this, SLOT(addItem()));
                 actionsFrame->layout()->addWidget(addButton);
                 QPushButton* deleteButton = new QPushButton("-", actionsFrame);
+                QObject::connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteItem()));
                 actionsFrame->layout()->addWidget(deleteButton);
             mainFrame->layout()->addWidget(actionsFrame);
             QFrame* listFrame = new QFrame(mainFrame);
             listFrame->setLayout(new QVBoxLayout(listFrame));
             listFrame->layout()->setContentsMargins(0, 0, 0, 0);
-                QListWidget* list = new QListWidget(container);
-                for(auto item : m_items)
-                {
-                    QListWidgetItem* listItem = new QListWidgetItem(list);
-                    MyListWidgetItem* widget = new MyListWidgetItem(item, 1, false, list);
-                    listItem->setSizeHint(widget->minimumSizeHint());
-                    list->addItem(listItem);
-                    list->setItemWidget(listItem, widget);
-                }
-                listFrame->layout()->addWidget(list);
+                m_listWidget = new QListWidget(container);
+                updateList();
+                listFrame->layout()->addWidget(m_listWidget);
             mainFrame->layout()->addWidget(listFrame);
         container->layout()->addWidget(mainFrame);
-    this->layout()->addWidget(container);
+        this->layout()->addWidget(container);
+}
+
+void MyListWidget::updateList()
+{
+    m_listWidget->clear();
+    for(auto item : m_items)
+    {
+        QListWidgetItem* listItem = new QListWidgetItem(m_listWidget);
+        MyListWidgetItem* widget = new MyListWidgetItem(item, 1, false, m_listWidget);
+        listItem->setSizeHint(widget->minimumSizeHint());
+        m_listWidget->addItem(listItem);
+        m_listWidget->setItemWidget(listItem, widget);
+    }
+}
+
+void MyListWidget::addItem()
+{
+    m_items.append("");
+    updateList();
+}
+
+void MyListWidget::deleteItem()
+{
+    MyListWidgetItem* item = qobject_cast<MyListWidgetItem*>(m_listWidget->currentItem()->
+                                                             listWidget()->indexWidget(m_listWidget->currentIndex()));
+    m_items.removeOne(item->item());
+    updateList();
 }

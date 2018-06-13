@@ -14,6 +14,8 @@ class MyListWidgetItem : public QWidget
 public:
     explicit MyListWidgetItem(QString item, size_t count, bool checked, QWidget *parent = nullptr);
 
+    QString item() const;
+
 signals:
 
 public slots:

@@ -35,3 +35,8 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
 
     this->layout()->addWidget(container);
 }
+
+QString MyListWidgetItem::item() const
+{
+    return m_item;
+}

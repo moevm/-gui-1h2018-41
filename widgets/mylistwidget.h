@@ -31,6 +31,7 @@ public slots:
 private slots:
     void addItem();
     void deleteItem();
+    void onItemChanged();
 };
 
 #endif // MYLISTWIDGET_H

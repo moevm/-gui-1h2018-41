@@ -17,12 +17,19 @@ public:
     QString item() const;
 
 signals:
+    void save();
 
 public slots:
+    void onItemUpdated();
+
 private:
     QString m_item;
     size_t m_count;
     bool m_checked;
+
+    QLineEdit* m_itemWidget;
+    QLineEdit* m_counWidget;
+    QCheckBox* m_selectedCheckBox;
 };
 
 #endif // MYLISTWIDGETITEM_H

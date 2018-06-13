@@ -15,23 +15,24 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     container->layout()->setContentsMargins(0, 0, 0, 0);
     container->layout()->setAlignment(Qt::AlignLeft);
 
-    QCheckBox* itemCheckBox = new QCheckBox(container);
+    m_selectedCheckBox = new QCheckBox(container);
     if(m_checked)
     {
-        itemCheckBox->setChecked(true);
+        m_selectedCheckBox->setChecked(true);
     }
     else
     {
-        itemCheckBox->setChecked(false);
+        m_selectedCheckBox->setChecked(false);
     }
-    container->layout()->addWidget(itemCheckBox);
+    container->layout()->addWidget(m_selectedCheckBox);
 
-    QLineEdit* title = new QLineEdit(m_item, container);
-    container->layout()->addWidget(title);
+    m_itemWidget = new QLineEdit(m_item, container);
+    QObject::connect(m_itemWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
+    container->layout()->addWidget(m_itemWidget);
 
-    QLineEdit* lineEdit = new QLineEdit(QString::number(m_count), container);
-    lineEdit->setMaximumWidth(50);
-    container->layout()->addWidget(lineEdit);
+    m_counWidget = new QLineEdit(QString::number(m_count), container);
+    m_counWidget->setMaximumWidth(50);
+    container->layout()->addWidget(m_counWidget);
 
     this->layout()->addWidget(container);
 }
@@ -39,4 +40,12 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
 QString MyListWidgetItem::item() const
 {
     return m_item;
+}
+
+void MyListWidgetItem::onItemUpdated()
+{
+    m_item = m_itemWidget->text();
+    m_count = m_counWidget->text().toUInt();
+    m_checked = m_selectedCheckBox->isChecked();
+    emit save();
 }

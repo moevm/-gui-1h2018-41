@@ -48,6 +48,7 @@ void MyListWidget::updateList()
     {
         QListWidgetItem* listItem = new QListWidgetItem(m_listWidget);
         MyListWidgetItem* widget = new MyListWidgetItem(item, 1, false, m_listWidget);
+        connect(widget, SIGNAL(save()), this, SLOT(onItemChanged()));
         listItem->setSizeHint(widget->minimumSizeHint());
         m_listWidget->addItem(listItem);
         m_listWidget->setItemWidget(listItem, widget);
@@ -62,8 +63,22 @@ void MyListWidget::addItem()
 
 void MyListWidget::deleteItem()
 {
-    MyListWidgetItem* item = qobject_cast<MyListWidgetItem*>(m_listWidget->currentItem()->
-                                                             listWidget()->indexWidget(m_listWidget->currentIndex()));
+    MyListWidgetItem* item = qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->currentItem()));
     m_items.removeOne(item->item());
     updateList();
+}
+
+void MyListWidget::onItemChanged()
+{
+    if(m_listWidget->count() == m_items.size())
+    {
+        for(int i = 0; i < m_listWidget->count(); i++)
+        {
+            MyListWidgetItem* itemWidget =
+                    qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
+            disconnect(itemWidget, SIGNAL(save()), this, SLOT(onItemChanged()));
+            m_items[i] = itemWidget->item();
+        }
+        //updateList();
+    }
 }

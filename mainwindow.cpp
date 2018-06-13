@@ -6,7 +6,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     initWidgets();
+
+    this->showMaximized();
 }
 
 MainWindow::~MainWindow()
@@ -16,25 +19,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::initWidgets()
 {
-    QMdiSubWindow* w1 = new QMdiSubWindow(ui->mdiArea);
-    QListWidget* testList1 = new QListWidget(w1);
-    testList1->addItem("123");
-    testList1->addItem("test");
-    testList1->addItem("smth");
-    w1->setWidget(testList1);
+    QStringList exampleList = {"123", "test", "asd"};
 
+    QMdiSubWindow* w1 = new QMdiSubWindow(ui->mdiArea);
+    MyListWidget* myList1 = new MyListWidget("List 1", exampleList, w1);
+    w1->setWidget(myList1);
     QMdiSubWindow* w2 = new QMdiSubWindow(ui->mdiArea);
-    QListWidget* testList2 = new QListWidget(ui->mdiArea);
-    testList2->addItem("123");
-    testList2->addItem("test");
-    testList2->addItem("smth");
-    w2->setWidget(testList2);
+    MyListWidget* myList2 = new MyListWidget("List 2", exampleList, w2);
+    w2->setWidget(myList2);
 
     QMdiSubWindow* w3 = new QMdiSubWindow(ui->mdiArea);
-    QListWidget* testList3 = new QListWidget(ui->mdiArea);
-    testList3->addItem("123");
-    testList3->addItem("test");
-    testList3->addItem("smth");
-    w3->setWidget(testList3);
+    MyListWidget* myList3 = new MyListWidget("List 3", exampleList, w3);
+    w3->setWidget(myList3);
 
 }

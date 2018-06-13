@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMdiSubWindow>
+#include "widgets/mylistwidget.h"
 
 namespace Ui {
 class MainWindow;

@@ -9,7 +9,7 @@
 #include <QCheckBox>
 #include <QDebug>
 
-#include "widgets/mylistwidgetitem.h"
+#include "gui/widgets/mylistwidgetitem.h"
 
 class MyListWidget : public QWidget
 {

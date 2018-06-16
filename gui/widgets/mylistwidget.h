@@ -17,6 +17,8 @@ class MyListWidget : public QWidget
 public:
     explicit MyListWidget(QString name, QStringList items, QWidget *parent = nullptr);
 
+    QList<QMap<QString, QString> > getCurrentListState();
+
 private:
     QString m_listName;
     QStringList m_items;

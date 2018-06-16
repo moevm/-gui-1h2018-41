@@ -2,7 +2,7 @@
 
 MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWidget *parent) :
     QWidget(parent),
-    m_item(item),
+    m_title(item),
     m_count(count),
     m_checked(checked)
 {
@@ -26,7 +26,7 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     }
     container->layout()->addWidget(m_selectedCheckBox);
 
-    m_itemWidget = new QLineEdit(m_item, container);
+    m_itemWidget = new QLineEdit(m_title, container);
     QObject::connect(m_itemWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_itemWidget);
 
@@ -37,15 +37,25 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     this->layout()->addWidget(container);
 }
 
-QString MyListWidgetItem::item() const
+QString MyListWidgetItem::title() const
 {
-    return m_item;
+    return m_title;
 }
 
 void MyListWidgetItem::onItemUpdated()
 {
-    m_item = m_itemWidget->text();
+    m_title = m_itemWidget->text();
     m_count = m_counWidget->text().toUInt();
     m_checked = m_selectedCheckBox->isChecked();
     emit save();
+}
+
+bool MyListWidgetItem::checked() const
+{
+    return m_checked;
+}
+
+size_t MyListWidgetItem::count() const
+{
+    return m_count;
 }

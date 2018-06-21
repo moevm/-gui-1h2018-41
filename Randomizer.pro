@@ -28,13 +28,19 @@ SOURCES += \
         gui/mainwindow.cpp \
     gui/widgets/mylistwidget.cpp \
     gui/widgets/mylistwidgetitem.cpp \
-    libs/jsonparser/json.cpp
+    libs/jsonparser/json.cpp \
+    models/types/randomitem.cpp \
+    models/types/randomitemlist.cpp \
+    models/repository/repository.cpp
 
 HEADERS += \
         gui/mainwindow.h \
     gui/widgets/mylistwidget.h \
     gui/widgets/mylistwidgetitem.h \
-    libs/jsonparser/json.h
+    libs/jsonparser/json.h \
+    models/types/randomitem.h \
+    models/types/randomitemlist.h \
+    models/repository/repository.h
 
 FORMS += \
         gui/mainwindow.ui

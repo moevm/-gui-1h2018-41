@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         gui/mainwindow.cpp \
     gui/widgets/mylistwidget.cpp \
-    gui/widgets/mylistwidgetitem.cpp
+    gui/widgets/mylistwidgetitem.cpp \
+    libs/jsonparser/json.cpp
 
 HEADERS += \
         gui/mainwindow.h \
     gui/widgets/mylistwidget.h \
-    gui/widgets/mylistwidgetitem.h
+    gui/widgets/mylistwidgetitem.h \
+    libs/jsonparser/json.h
 
 FORMS += \
         gui/mainwindow.ui

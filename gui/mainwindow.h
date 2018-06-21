@@ -5,6 +5,9 @@
 #include <QMdiSubWindow>
 #include "widgets/mylistwidget.h"
 
+// убрать
+#include "libs/jsonparser/json.h"
+
 namespace Ui {
 class MainWindow;
 }

@@ -30,8 +30,19 @@ void MainWindow::initWidgets()
     // никогда не делать такие вещи в gui!!! пишу просто для примера
 
     // parse
-    QString example = "{\"test\": 123, \"qwe\": \"asd\"}";
-    QtJson::JsonObject objectFromFile = QtJson::parse(example).toMap();
+
+
+    //QString example = "{[{\"list1\": [{\"title1\", \"1\", \"100\"}]}]}";
+    QString example = "{\"lists\":["
+                      "{\"list1\": [[\"title1\", 1, 900], [\"title2\", 1, 2], [\"title3\", 1, 5]]},"
+                      "{\"list2\": [[\"title1\", 1, 100], [\"title2\", 0, 1], [\"title3\", 1, 9]]},"
+                      "{\"list3\": [[\"title1\", 1, 12], [\"title2\", 1, 11], [\"title3\", 0, 1]]}"
+                      "{\"list4\": [[\"title1\", 0, 44], [\"title3\", 0, 1]]}"
+                      "]}";
+
+     Repository repo;
+     repo.setContent(example);
+    /*QtJson::JsonObject objectFromFile = QtJson::parse(example).toMap();
 
     qDebug() << "parsed object from file:" << objectFromFile;
     qDebug() << "";
@@ -53,7 +64,7 @@ void MainWindow::initWidgets()
 
     // serialize (need for save)
     QByteArray data = QtJson::serialize(object);
-    qDebug() << "serialized object:" << data;
+    qDebug() << "serialized object:" << data;*/
 
 }
 

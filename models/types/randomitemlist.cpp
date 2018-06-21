@@ -1,8 +1,7 @@
 #include "randomitemlist.h"
 
-RandomItemList::RandomItemList(QString title, QList<RandomItem> items, QObject *parent) : QObject(parent),
-    m_title(title),
-    m_items(items)
+RandomItemList::RandomItemList(QString title) :
+    m_title(title)
 {
 
 }
@@ -37,7 +36,7 @@ RandomItem RandomItemList::get(size_t index)
     }
     else
     {
-        throw std::out_of_range("Index is out of range");
+        throw std::out_of_range("index is out of range");
     }
     return item;
 }
@@ -50,6 +49,11 @@ void RandomItemList::update(size_t index, RandomItem value)
     }
     else
     {
-        throw std::out_of_range("Index is out of range");
+        throw std::out_of_range("index is out of range");
     }
+}
+
+size_t RandomItemList::size()
+{
+    return m_items.size();
 }

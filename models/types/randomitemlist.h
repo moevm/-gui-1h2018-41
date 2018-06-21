@@ -3,24 +3,20 @@
 
 #include <QObject>
 
-#include "randomitem.h"
+#include "models/types/randomitem.h"
 
-class RandomItemList : public QObject
+class RandomItemList
 {
-    Q_OBJECT
 public:
-    explicit RandomItemList(QString title, QList<RandomItem> items, QObject *parent = nullptr);
+    explicit RandomItemList(QString title);
 
     QString title() const;
     void setTitle(const QString &title);
-
-signals:
-
-public slots:
     void add(RandomItem item);
     void remove(size_t index);
     RandomItem get(size_t index);
     void update(size_t index, RandomItem value);
+    size_t size();
 
 private:
     QString m_title;

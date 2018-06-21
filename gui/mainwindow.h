@@ -5,6 +5,8 @@
 #include <QMdiSubWindow>
 #include "widgets/mylistwidget.h"
 
+#include "models/repository/repository.h"
+
 // убрать
 #include "libs/jsonparser/json.h"
 

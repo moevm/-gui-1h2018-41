@@ -2,20 +2,28 @@
 #define REPOSITORY_H
 
 #include <QObject>
-#include "../types/randomitemlist.h"
+#include <QSet>
+#include <QDebug>
+
+#include "models/types/randomitemlist.h"
+#include "libs/jsonparser/json.h"
 
 class Repository : public QObject
 {
     Q_OBJECT
 public:
-    explicit Repository(QObject *parent = nullptr);
+    explicit Repository (QObject *parent = nullptr);
+
+    //QSet<RandomItemList> repo() const;
+    void setContent(QString str);
+    //void setContent(QList<QMap<QString,QString>> list);
 
 signals:
 
 public slots:
 
-private:
-    //QSet<RandomItemList> set;
+protected:
+    QList<RandomItemList> m_lists;
 };
 
 #endif // REPOSITORY_H

@@ -1,6 +1,6 @@
 #include "randomizer.h"
 
-Randomizer::Randomizer(QObject *parent) : QObject(parent)
+Randomizer::Randomizer()
 {
 
 }
@@ -10,15 +10,17 @@ void Randomizer::setLists(const QList<QList<QMap<QString, QString> > > &lists)
     m_lists = lists;
 }
 
-void Randomizer::start()
+QStringList Randomizer::start()
 {
-    qDebug() << "initial lists" << m_lists;
+    //qDebug() << "initial lists" << m_lists;
     qDebug() << "";
     QList<QStringList> selectedItems = createSelectedItems();
-    qDebug() << "only selected items" << selectedItems;
-    qDebug() << "";
+    //qDebug() << "only selected items" << selectedItems;
+    //qDebug() << "";
     selectedItems = mixListsItems(selectedItems);
     qDebug() << "mixed items" << selectedItems;
+    QStringList items = randomItems(selectedItems);
+    return items;
 }
 
 QList<QStringList> Randomizer::createSelectedItems()
@@ -46,8 +48,6 @@ QList<QStringList> Randomizer::createSelectedItems()
 
 QList<QStringList> Randomizer::mixListsItems(QList< QStringList > lists)
 {
-    std::random_device rd;
-
     QList<QStringList> mixedLists;
     for(auto list : lists)
     {
@@ -57,4 +57,20 @@ QList<QStringList> Randomizer::mixListsItems(QList< QStringList > lists)
         mixedLists.push_back(mixedItems);
     }
     return mixedLists;
+}
+
+QStringList Randomizer::randomItems(QList<QStringList> lists)
+{
+    QStringList randomItems;
+    for(auto list : lists)
+    {
+        if(list.size() > 0)
+        {
+            std::mt19937 g(rd());
+            std::uniform_int_distribution<int> randomItemIndex(0, list.size() - 1);
+            int artistIndex = randomItemIndex(g);
+            randomItems.push_back(list[artistIndex]);
+        }
+    }
+    return randomItems;
 }

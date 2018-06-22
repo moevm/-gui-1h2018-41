@@ -79,8 +79,9 @@ void MainWindow::on_randomizePushButton_clicked()
                 qobject_cast<MyListWidget*>(subWindow->widget());
         listsStates.push_back(list->getCurrentListState());
     }
-    Randomizer* r = new Randomizer(this);
-    r->setLists(listsStates);
-    r->start();
-    delete r;
+    Randomizer r;
+    r.setLists(listsStates);
+    QStringList items = r.start();
+    ui->listWidget->clear();
+    ui->listWidget->addItems(items);
 }

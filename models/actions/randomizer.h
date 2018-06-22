@@ -1,7 +1,6 @@
 #ifndef RANDOMIZER_H
 #define RANDOMIZER_H
 
-#include <QObject>
 #include <QDebug>
 
 #include <random>
@@ -9,28 +8,22 @@
 
 #include "models/types/randomitemlist.h"
 
-class Randomizer : public QObject
+class Randomizer
 {
-    Q_OBJECT
 public:
-    explicit Randomizer(QObject *parent = nullptr);
+    explicit Randomizer();
 
     void setLists(const QList<QList<QMap<QString, QString> > > &lists);
 
-    void start();
+    QStringList start();
 
 protected:
     QList< QList<QMap<QString, QString> > > m_lists;
-
-    //QList< QStringList > m_selecteItems;
+    std::random_device rd;
 
     QList<QStringList> createSelectedItems();
     QList<QStringList> mixListsItems(QList<QStringList> lists);
-
-signals:
-    void randomized(QStringList items);
-
-public slots:
+    QStringList randomItems(QList<QStringList> lists);
 };
 
 #endif // RANDOMIZER_H

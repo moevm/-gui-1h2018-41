@@ -15,7 +15,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QLabel" name="label">
       <property name="text">
        <string>Управление списками</string>
@@ -25,14 +25,14 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1" rowspan="3">
+    <item row="1" column="1" rowspan="3">
      <widget class="Line" name="line">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
     </item>
-    <item row="0" column="2" colspan="2">
+    <item row="1" column="2" colspan="2">
      <widget class="QLabel" name="label_2">
       <property name="text">
        <string>Рандомизация</string>
@@ -42,7 +42,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0" rowspan="2">
+    <item row="2" column="0" rowspan="2">
      <widget class="QMdiArea" name="mdiArea">
       <property name="verticalScrollBarPolicy">
        <enum>Qt::ScrollBarAsNeeded</enum>
@@ -67,22 +67,29 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QPushButton" name="pushButton">
+    <item row="2" column="2">
+     <widget class="QPushButton" name="randomizePushButton">
       <property name="text">
        <string>Рандомизация:</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="3">
+    <item row="2" column="3">
      <widget class="QToolButton" name="toolButton">
       <property name="text">
        <string>Настроить</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="2" colspan="2">
+    <item row="3" column="2" colspan="2">
      <widget class="QListWidget" name="listWidget"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="openPushButton">
+      <property name="text">
+       <string>Open</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

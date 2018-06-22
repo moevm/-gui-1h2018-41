@@ -27,11 +27,7 @@ void MainWindow::initWidgets()
         w->show();
     }
 
-    // никогда не делать такие вещи в gui!!! пишу просто для примера
-
     // parse
-
-
     //QString example = "{[{\"list1\": [{\"title1\", \"1\", \"100\"}]}]}";
     QString example = "{\"lists\":["
                       "{\"list1\": [[\"title1\", 1, 900], [\"title2\", 1, 2], [\"title3\", 1, 5]]},"

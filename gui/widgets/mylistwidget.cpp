@@ -17,10 +17,19 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
     QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onTitleChanged()));
     container->layout()->addWidget(m_titleWidget);
         QFrame* mainFrame = new QFrame(container);
-        mainFrame->setLayout(new QHBoxLayout(mainFrame));
+        mainFrame->setLayout(new QVBoxLayout(mainFrame));
         mainFrame->layout()->setContentsMargins(0, 0, 0, 0);
+
+            QFrame* listFrame = new QFrame(mainFrame);
+            listFrame->setLayout(new QVBoxLayout(listFrame));
+            listFrame->layout()->setContentsMargins(0, 0, 0, 0);
+                m_listWidget = new QListWidget(container);
+                updateWidgets();
+                listFrame->layout()->addWidget(m_listWidget);
+            mainFrame->layout()->addWidget(listFrame);
+
             QFrame* actionsFrame = new QFrame(mainFrame);
-            actionsFrame->setLayout(new QVBoxLayout(actionsFrame));
+            actionsFrame->setLayout(new QHBoxLayout(actionsFrame));
             actionsFrame->layout()->setContentsMargins(0, 0, 0, 0);
             actionsFrame->layout()->setAlignment(Qt::AlignTop);
                 QPushButton* addButton = new QPushButton("+", actionsFrame);
@@ -30,13 +39,7 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
                 QObject::connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteItem()));
                 actionsFrame->layout()->addWidget(deleteButton);
             mainFrame->layout()->addWidget(actionsFrame);
-            QFrame* listFrame = new QFrame(mainFrame);
-            listFrame->setLayout(new QVBoxLayout(listFrame));
-            listFrame->layout()->setContentsMargins(0, 0, 0, 0);
-                m_listWidget = new QListWidget(container);
-                updateWidgets();
-                listFrame->layout()->addWidget(m_listWidget);
-            mainFrame->layout()->addWidget(listFrame);
+
         container->layout()->addWidget(mainFrame);
         this->layout()->addWidget(container);
 }
@@ -105,7 +108,7 @@ void MyListWidget::onItemChanged()
 
             m_state.listItems[i] = item;
         }
-        //updateList();
+        updateWidgets();
     }
 }
 

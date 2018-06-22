@@ -7,6 +7,7 @@
 #include <QCheckBox>
 #include <QLineEdit>
 #include <QLayout>
+#include <QDebug>
 
 class MyListWidgetItem : public QWidget
 {
@@ -32,7 +33,7 @@ private:
     bool m_checked;
 
     QLineEdit* m_itemWidget;
-    QLineEdit* m_counWidget;
+    QLineEdit* m_countWidget;
     QCheckBox* m_selectedCheckBox;
 };
 

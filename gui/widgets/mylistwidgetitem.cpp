@@ -31,10 +31,10 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     QObject::connect(m_itemWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_itemWidget);
 
-    m_counWidget = new QLineEdit(QString::number(m_count), container);
-    m_counWidget->setMaximumWidth(50);
-    QObject::connect(m_counWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
-    container->layout()->addWidget(m_counWidget);
+    m_countWidget = new QLineEdit(QString::number(m_count), container);
+    m_countWidget->setMaximumWidth(50);
+    QObject::connect(m_countWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
+    container->layout()->addWidget(m_countWidget);
 
     this->layout()->addWidget(container);
 }
@@ -47,7 +47,7 @@ QString MyListWidgetItem::title() const
 void MyListWidgetItem::onItemUpdated()
 {
     m_title = m_itemWidget->text();
-    m_count = m_counWidget->text().toUInt();
+    m_count = m_countWidget->text().toUInt();
     m_checked = m_selectedCheckBox->isChecked();
     emit save();
 }

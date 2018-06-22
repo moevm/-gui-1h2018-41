@@ -111,19 +111,17 @@ void MainWindow::on_randomizePushButton_clicked()
         listsStates.push_back(list->getCurrentListState());
     }
 
-    // set content
-
     m_repo.setContent(toModelFormat(listsStates));
 
     QList<RandomItemList> lists = m_repo.getContent();
 
-
-    /*QStringList listsTitles;
-    QList<QList<QMap<QString, QString> > > listsItems;
-    for(auto list : listsStates)
+    /*for(int i = 0; i < lists.size(); i++)
     {
-        listsTitles.push_back(list.first);
-        listsItems.push_back(list.second);
+        for(int j = 0; j < lists[i].size(); j++)
+        {
+            RandomItem item = lists[i].get(j);
+            qDebug() << item.getTitle() << item.getSelected() << item.getCount();
+        }
     }*/
 
     Randomizer r;

@@ -13,9 +13,13 @@ void Randomizer::setLists(const QList<RandomItemList> &lists)
 QString Randomizer::start()
 {
     QList<RandomResults> results = createSelectedItems();
+    //qDebug() << "filled";
     results = mixListsItems(results);
+    //qDebug() << "mixed";
     results = randomItems(results);
+    //qDebug() << "randomized";
     QString output = toString(results);
+    //qDebug() << "converted";
     return output;
 }
 

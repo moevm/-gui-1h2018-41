@@ -22,7 +22,7 @@ void MainWindow::initWidgets()
 
     QStringList exampleList = {"123", "test", "asd"};
 
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 2; i++)
     {
         QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
         MyListWidget* myList = new MyListWidget(QStringLiteral("List") + QString::number(i), exampleList, w);
@@ -68,4 +68,19 @@ void MainWindow::on_actionOpen_triggered()
         qDebug() << "Content:" << content;
         repo.setContent(content);
     }
+}
+
+void MainWindow::on_randomizePushButton_clicked()
+{
+    QList<QList<QMap<QString, QString> > > listsStates;
+    for(auto subWindow : ui->mdiArea->subWindowList())
+    {
+        MyListWidget* list =
+                qobject_cast<MyListWidget*>(subWindow->widget());
+        listsStates.push_back(list->getCurrentListState());
+    }
+    Randomizer* r = new Randomizer(this);
+    r->setLists(listsStates);
+    r->start();
+    delete r;
 }

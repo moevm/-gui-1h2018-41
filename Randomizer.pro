@@ -31,7 +31,8 @@ SOURCES += \
     libs/jsonparser/json.cpp \
     models/types/randomitem.cpp \
     models/types/randomitemlist.cpp \
-    models/repository/repository.cpp
+    models/repository/repository.cpp \
+    models/actions/randomizer.cpp
 
 HEADERS += \
         gui/mainwindow.h \
@@ -40,7 +41,8 @@ HEADERS += \
     libs/jsonparser/json.h \
     models/types/randomitem.h \
     models/types/randomitemlist.h \
-    models/repository/repository.h
+    models/repository/repository.h \
+    models/actions/randomizer.h
 
 FORMS += \
         gui/mainwindow.ui

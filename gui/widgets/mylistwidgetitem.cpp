@@ -24,6 +24,7 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     {
         m_selectedCheckBox->setChecked(false);
     }
+    QObject::connect(m_selectedCheckBox, SIGNAL(clicked(bool)), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_selectedCheckBox);
 
     m_itemWidget = new QLineEdit(m_title, container);
@@ -32,6 +33,7 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
 
     m_counWidget = new QLineEdit(QString::number(m_count), container);
     m_counWidget->setMaximumWidth(50);
+    QObject::connect(m_counWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_counWidget);
 
     this->layout()->addWidget(container);

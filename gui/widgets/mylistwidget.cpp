@@ -13,7 +13,7 @@ MyListWidget::MyListWidget(QString name, QList<QMap<QString, QString> > items, Q
     container->setLayout(new QVBoxLayout(container));
     container->layout()->setContentsMargins(0, 0, 0, 0);
 
-    QLabel* title = new QLabel(m_listName, container);
+    QLineEdit* title = new QLineEdit(m_listName, container);
     title->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     container->layout()->addWidget(title);
         QFrame* mainFrame = new QFrame(container);

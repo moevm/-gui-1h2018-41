@@ -53,5 +53,4 @@ void Repository::setContent(QString str)
         }
         qDebug() << "";
     }
-
 }

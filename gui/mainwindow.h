@@ -32,6 +32,8 @@ private:
 
     QList<MyListWidget*> m_listsWidgets;
 
+    Repository repo;
+
     void initWidgets();
 };
 

@@ -40,32 +40,7 @@ void MainWindow::initWidgets()
                       "{\"list4\": [[\"title1\", 0, 44], [\"title3\", 0, 1]]}"
                       "]}";
 
-     Repository repo;
      repo.setContent(example);
-    /*QtJson::JsonObject objectFromFile = QtJson::parse(example).toMap();
-
-    qDebug() << "parsed object from file:" << objectFromFile;
-    qDebug() << "";
-
-    // create
-    QtJson::JsonObject object;
-    object["Key1"] = 123;
-    object["Key2"] = 456;
-    object["Key3"] = "asd";
-
-    QtJson::JsonArray array { "test1", "test2", 1, 2, 4};
-
-    object["arrayExample"] = array;
-
-    qDebug() << "created object:" << object.toStdMap();
-    qDebug() << "";
-    qDebug() << "created array:" << array.toVector();
-    qDebug() << "";
-
-    // serialize (need for save)
-    QByteArray data = QtJson::serialize(object);
-    qDebug() << "serialized object:" << data;*/
-
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -76,6 +51,4 @@ void MainWindow::on_pushButton_clicked()
                 qobject_cast<MyListWidget*>(subWindow->widget());
         qDebug() << list->getCurrentListState();
     }
-
-
 }

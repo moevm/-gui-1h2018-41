@@ -14,7 +14,7 @@ class Repository : public QObject
 public:
     explicit Repository (QObject *parent = nullptr);
 
-    //QSet<RandomItemList> repo() const;
+    //QSet<RandomItemList> m_lists() const;
     void setContent(QString str);
     //void setContent(QList<QMap<QString,QString>> list);
 

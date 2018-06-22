@@ -17,6 +17,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::initWidgets()
 {
+    auto toolbar = ui->mainToolBar;
+    removeToolBar(toolbar);
+
     QStringList exampleList = {"123", "test", "asd"};
 
     for(int i = 0; i < 5; i++)
@@ -29,14 +32,14 @@ void MainWindow::initWidgets()
 
     // parse
     //QString example = "{[{\"list1\": [{\"title1\", \"1\", \"100\"}]}]}";
-    QString example = "{\"lists\":["
+   /* QString example = "{\"lists\":["
                       "{\"list1\": [[\"title1\", 1, 900], [\"title2\", 1, 2], [\"title3\", 1, 5]]},"
                       "{\"list2\": [[\"title1\", 1, 100], [\"title2\", 0, 1], [\"title3\", 1, 9]]},"
                       "{\"list3\": [[\"title1\", 1, 12], [\"title2\", 1, 11], [\"title3\", 0, 1]]}"
                       "{\"list4\": [[\"title1\", 0, 44], [\"title3\", 0, 1]]}"
                       "]}";
 
-     repo.setContent(example);
+    repo.setContent(example);*/
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -46,5 +49,23 @@ void MainWindow::on_pushButton_clicked()
         MyListWidget* list =
                 qobject_cast<MyListWidget*>(subWindow->widget());
         qDebug() << list->getCurrentListState();
+    }
+}
+
+void MainWindow::on_openPushButton_clicked()
+{
+    on_actionOpen_triggered();
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QString path = QFileDialog::getOpenFileName(0, "Open File", "", "*.json");
+    QFile file(path);
+    if ((file.exists()) && (file.open(QIODevice::ReadOnly)))
+    {
+        QString content = file.readAll();
+        file.close();
+        qDebug() << "Content:" << content;
+        repo.setContent(content);
     }
 }

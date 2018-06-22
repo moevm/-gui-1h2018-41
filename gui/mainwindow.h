@@ -3,13 +3,10 @@
 
 #include <QMainWindow>
 #include <QMdiSubWindow>
+#include <QFileDialog>
+
 #include "widgets/mylistwidget.h"
-
 #include "models/repository/repository.h"
-
-// убрать
-#include "libs/jsonparser/json.h"
-
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +23,10 @@ public:
 private slots:
 
     void on_pushButton_clicked();
+
+    void on_openPushButton_clicked();
+
+    void on_actionOpen_triggered();
 
 private:
     Ui::MainWindow *ui;

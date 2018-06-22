@@ -20,6 +20,7 @@ void MainWindow::initWidgets()
     auto toolbar = ui->mainToolBar;
     toolbar->show();
     toolbar->addAction(ui->actionOpen);
+    toolbar->addAction(ui->actionClear);
 }
 
 void MainWindow::clear()
@@ -91,7 +92,7 @@ void MainWindow::on_randomizePushButton_clicked()
     ui->listWidget->addItems(items);
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_actionClear_triggered()
 {
     clear();
 }

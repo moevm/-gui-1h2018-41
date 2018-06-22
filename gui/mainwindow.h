@@ -27,7 +27,7 @@ private slots:
 
     void on_randomizePushButton_clicked();
 
-    void on_pushButton_clicked();
+    void on_actionClear_triggered();
 
 private:
     Ui::MainWindow *ui;

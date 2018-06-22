@@ -18,9 +18,13 @@ public:
     void update(size_t index, RandomItem value);
     size_t size();
 
+    size_t getNeedToFind() const;
+    void setNeedToFind(const size_t &needToFind);
+
 private:
     QString m_title;
     QList<RandomItem> m_items;
+    size_t m_needToFind;
 };
 
 #endif // RANDOMITEMLIST_H

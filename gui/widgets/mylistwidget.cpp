@@ -12,11 +12,22 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
     container->setLayout(new QVBoxLayout(container));
     container->layout()->setContentsMargins(0, 0, 0, 0);
 
-    m_titleWidget = new QLineEdit(m_state.listName, container);
-    m_titleWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    m_titleWidget->setStyleSheet("border:1px solid #dfdfdf; border-radius: 5px; padding:5px;");
-    QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onTitleChanged()));
-    container->layout()->addWidget(m_titleWidget);
+    QFrame* titleFrame = new QFrame(container);
+    titleFrame->setLayout(new QHBoxLayout(titleFrame));
+    titleFrame->layout()->setContentsMargins(0, 0, 0, 0);
+        m_titleWidget = new QLineEdit(m_state.listName, titleFrame);
+        m_titleWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        m_titleWidget->setStyleSheet("border:1px solid #dfdfdf; border-radius: 5px; padding:5px;");
+        QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onTitleChanged()));
+        titleFrame->layout()->addWidget(m_titleWidget);
+
+        m_needToFindWidget = new QLineEdit(QString::number(1), titleFrame);
+        m_needToFindWidget->setMaximumWidth(50);
+        m_needToFindWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        m_needToFindWidget->setStyleSheet("background-color:#fff; border:1px solid #dfdfdf; border-radius:5px; padding:5px;");
+        QObject::connect(m_needToFindWidget, SIGNAL(editingFinished()), this, SLOT(onNeedToFindChanged()));
+        titleFrame->layout()->addWidget(m_needToFindWidget);
+    container->layout()->addWidget(titleFrame);
         QFrame* mainFrame = new QFrame(container);
         mainFrame->setLayout(new QVBoxLayout(mainFrame));
         mainFrame->layout()->setContentsMargins(0, 0, 0, 0);
@@ -55,6 +66,7 @@ void MyListWidget::updateWidgets()
     m_listWidget->clear();
 
     m_titleWidget->setText(m_state.listName);
+    m_needToFindWidget->setText(QString::number(m_state.needToFind));
     for(auto item : m_state.listItems)
     {
         QListWidgetItem* listItem = new QListWidgetItem(m_listWidget);
@@ -116,4 +128,9 @@ void MyListWidget::onItemChanged()
 void MyListWidget::onTitleChanged()
 {
     m_state.listName = m_titleWidget->text();
+}
+
+void MyListWidget::onNeedToFindChanged()
+{
+    m_state.needToFind = m_needToFindWidget->text().toUInt();
 }

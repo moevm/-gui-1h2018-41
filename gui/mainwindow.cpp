@@ -52,6 +52,7 @@ QList<ListState> MainWindow::toGuiFormat(QList<RandomItemList> lists)
             itemWidget.selected = item.getSelected();
 
             listWidgetState.listName = lists[i].title();
+            listWidgetState.needToFind = lists[i].getNeedToFind();
             listWidgetState.listItems.push_back(itemWidget);
         }
         listWidgetsStates.push_back(listWidgetState);
@@ -65,6 +66,7 @@ QList<RandomItemList> MainWindow::toModelFormat(QList<ListState> listsStates)
     for(auto listState : listsStates)
     {
         RandomItemList list(listState.listName);
+        list.setNeedToFind(listState.needToFind);
         for(auto itemState : listState.listItems)
         {
             RandomItem item;

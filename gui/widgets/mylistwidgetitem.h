@@ -30,9 +30,9 @@ public slots:
 private:
     QString m_title;
     size_t m_count;
-    bool m_checked;
+    bool m_selected;
 
-    QLineEdit* m_itemWidget;
+    QLineEdit* m_titleWidget;
     QLineEdit* m_countWidget;
     QCheckBox* m_selectedCheckBox;
 };

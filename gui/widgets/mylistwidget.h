@@ -32,6 +32,7 @@ struct ListState
 {
     QString listName;
     QList<ItemState> listItems;
+    size_t needToFind = 1;
 };
 
 class MyListWidget : public QWidget
@@ -46,6 +47,7 @@ private:
     ListState m_state;
 
     QLineEdit* m_titleWidget;
+    QLineEdit* m_needToFindWidget;
     QListWidget* m_listWidget;
     void updateWidgets();
 
@@ -58,6 +60,7 @@ private slots:
     void deleteItem();
     void onItemChanged();
     void onTitleChanged();
+    void onNeedToFindChanged();
 };
 
 #endif // MYLISTWIDGET_H

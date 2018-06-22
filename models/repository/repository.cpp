@@ -15,11 +15,16 @@ void Repository::setContent(QString str)
     {
         QtJson::JsonObject list = allLists[i].toMap();
 
-        QString listTitle =  list.begin().key();
+        QString listTitle = list.begin().key();
 
-        QtJson::JsonArray items = list[listTitle].toList();
+        QtJson::JsonObject listParams = list[listTitle].toMap();
+
+        size_t needToFind = listParams["find"].toUInt();
+
+        QtJson::JsonArray items = listParams["items"].toList();
 
         RandomItemList listTmp(listTitle);
+        listTmp.setNeedToFind(needToFind);
         for(int j = 0; j < items.size(); j++)
         {
             QtJson::JsonArray item = items[j].toList();

@@ -57,3 +57,13 @@ size_t RandomItemList::size()
 {
     return m_items.size();
 }
+
+size_t RandomItemList::getNeedToFind() const
+{
+    return m_needToFind;
+}
+
+void RandomItemList::setNeedToFind(const size_t &needToFind)
+{
+    m_needToFind = needToFind;
+}

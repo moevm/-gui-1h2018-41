@@ -12,7 +12,7 @@ void Randomizer::setLists(const QList<RandomItemList> &lists)
 
 QString Randomizer::start()
 {
-    QList<RandomResults> results = createSelectedItems();
+    QList< QPair<RandomResults, size_t> > results = createSelectedItems();
     //qDebug() << "filled";
     results = mixListsItems(results);
     //qDebug() << "mixed";
@@ -23,9 +23,9 @@ QString Randomizer::start()
     return output;
 }
 
-QList<RandomResults> Randomizer::createSelectedItems()
+QList< QPair<RandomResults, size_t> > Randomizer::createSelectedItems()
 {
-    QList<RandomResults> selectedItems;
+    QList< QPair<RandomResults, size_t> > selectedItems;
     for(auto list : m_lists)
     {
         RandomResults filledList;
@@ -44,61 +44,61 @@ QList<RandomResults> Randomizer::createSelectedItems()
             }
 
         }
-        selectedItems.push_back(filledList);
+        selectedItems.push_back(QPair<RandomResults, size_t>(filledList, list.getNeedToFind()));
     }
     return selectedItems;
 }
 
-QList<RandomResults> Randomizer::mixListsItems(QList<RandomResults> lists)
+QList<QPair<RandomResults, size_t> > Randomizer::mixListsItems(QList< QPair<RandomResults, size_t> > lists)
 {
-    QList<RandomResults> mixedLists;
+    QList< QPair<RandomResults, size_t> > mixedLists;
     for(auto list : lists)
     {
         RandomResults mixedList;
-        mixedList.title = list.title;
+        mixedList.title = list.first.title;
 
-        QStringList mixedItems = list.items;
+        QStringList mixedItems = list.first.items;
         std::mt19937 g(rd());
         std::shuffle(mixedItems.begin(), mixedItems.end(), g);
 
         mixedList.items = mixedItems;
 
-        mixedLists.push_back(mixedList);
+        mixedLists.push_back(QPair<RandomResults, size_t>(mixedList, list.second));
     }
     return mixedLists;
 }
 
-QList<RandomResults> Randomizer::randomItems(QList<RandomResults> lists)
+QList< QPair<RandomResults, size_t> > Randomizer::randomItems(QList< QPair<RandomResults, size_t> > lists)
 {
-    QList<RandomResults> allRandomListsItems;
+    QList< QPair<RandomResults, size_t> > allRandomListsItems;
     for(auto list : lists)
     {
-        QStringList allListItems = list.items;
+        QStringList allListItems = list.first.items;
         if(allListItems.size() > 0)
         {
             RandomResults listRandomResult;
-            listRandomResult.title = list.title;
+            listRandomResult.title = list.first.title;
 
             std::mt19937 g(rd());
             std::uniform_int_distribution<int> randomItemIndex(0, allListItems.size() - 1);
-            for(int i = 0; i < 2; i++)
+            for(size_t i = 0; i < list.second; i++)
             {
                 int index = randomItemIndex(g);
                 listRandomResult.items.push_back(allListItems[index]);
             }
-            allRandomListsItems.push_back(listRandomResult);
+            allRandomListsItems.push_back(QPair<RandomResults, size_t>(listRandomResult, list.second));
         }
     }
     return allRandomListsItems;
 }
 
-QString Randomizer::toString(QList<RandomResults> results)
+QString Randomizer::toString(QList<QPair<RandomResults, size_t> > results)
 {
     QString output = "";
     for(auto result : results)
     {
-        output += QStringLiteral("From list ") + result.title + QStringLiteral(" selected\n");
-        for(auto item : result.items)
+        output += QStringLiteral("From list ") + result.first.title + QStringLiteral(" selected\n");
+        for(auto item : result.first.items)
         {
             output += QStringLiteral("     ") + item + QStringLiteral("\n");
         }

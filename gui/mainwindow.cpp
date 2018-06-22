@@ -22,7 +22,7 @@ void MainWindow::initWidgets()
 
     QStringList exampleList = {"123", "test", "asd"};
 
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 2; i++)
     {
         QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
         MyListWidget* myList = new MyListWidget(QStringLiteral("List") + QString::number(i), exampleList, w);
@@ -40,16 +40,6 @@ void MainWindow::initWidgets()
                       "]}";
 
     repo.setContent(example);*/
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-    for(auto subWindow : ui->mdiArea->subWindowList())
-    {
-        MyListWidget* list =
-                qobject_cast<MyListWidget*>(subWindow->widget());
-        qDebug() << list->getCurrentListState();
-    }
 }
 
 void MainWindow::on_openPushButton_clicked()
@@ -82,4 +72,20 @@ void MainWindow::on_actionOpen_triggered()
         }
         qDebug() << "";
     }
+}
+
+void MainWindow::on_randomizePushButton_clicked()
+{
+    QList<QList<QMap<QString, QString> > > listsStates;
+    for(auto subWindow : ui->mdiArea->subWindowList())
+    {
+        MyListWidget* list =
+                qobject_cast<MyListWidget*>(subWindow->widget());
+        listsStates.push_back(list->getCurrentListState());
+    }
+    Randomizer r;
+    r.setLists(listsStates);
+    QStringList items = r.start();
+    ui->listWidget->clear();
+    ui->listWidget->addItems(items);
 }

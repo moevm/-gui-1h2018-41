@@ -7,6 +7,7 @@
 
 #include "widgets/mylistwidget.h"
 #include "models/repository/repository.h"
+#include "models/actions/randomizer.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,11 +23,11 @@ public:
 
 private slots:
 
-    void on_pushButton_clicked();
-
     void on_openPushButton_clicked();
 
     void on_actionOpen_triggered();
+
+    void on_randomizePushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

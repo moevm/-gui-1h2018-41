@@ -18,7 +18,8 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets()
 {
     auto toolbar = ui->mainToolBar;
-    removeToolBar(toolbar);
+    toolbar->show();
+    toolbar->addAction(ui->actionOpen);
 }
 
 void MainWindow::clear()
@@ -30,11 +31,6 @@ void MainWindow::clear()
 
     m_listsWidgets.clear();
     repo.clear();
-}
-
-void MainWindow::on_openPushButton_clicked()
-{
-    on_actionOpen_triggered();
 }
 
 void MainWindow::on_actionOpen_triggered()

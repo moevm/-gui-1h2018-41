@@ -68,4 +68,18 @@ void MainWindow::on_actionOpen_triggered()
         qDebug() << "Content:" << content;
         repo.setContent(content);
     }
+
+    QList<RandomItemList> list = repo.getContent();
+
+    qDebug() << "List from mainwindow:";
+    for(int i = 0; i < list.size(); i++)
+    {
+        qDebug() << "list" << list[i].title();
+        for(size_t j = 0; j < list[i].size(); j++)
+        {
+            RandomItem element = list[i].get(j);
+            qDebug()  << "item" << element.getTitle() << element.getSelected() << element.getCount();
+        }
+        qDebug() << "";
+    }
 }

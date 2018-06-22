@@ -22,7 +22,7 @@ void Repository::setContent(QString str)
         //qDebug() << "#" << i << "item is" << list << list.size();
 
         QString listTitle =  list.begin().key();
-        qDebug() << "list title" << listTitle;
+        //qDebug() << "list title" << listTitle;
         //qDebug() << "";
 
         QtJson::JsonArray items = list[listTitle].toList();
@@ -41,16 +41,9 @@ void Repository::setContent(QString str)
         //m_lists.insert(listTmp);
         m_lists.append(listTmp);
     }
+}
 
-
-    for(int i = 0; i < m_lists.size(); i++)
-    {
-        qDebug() << "list" << m_lists[i].title();
-        for(size_t j = 0; j < m_lists[i].size(); j++)
-        {
-            RandomItem element = m_lists[i].get(j);
-            qDebug()  << "item" << element.getTitle() << element.getSelected() << element.getCount();
-        }
-        qDebug() << "";
-    }
+QList<RandomItemList> Repository::getContent()
+{
+    return m_lists;
 }

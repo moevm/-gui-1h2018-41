@@ -15,30 +15,10 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QLabel" name="label">
+    <item row="0" column="0">
+     <widget class="QPushButton" name="openPushButton">
       <property name="text">
-       <string>Управление списками</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1" rowspan="3">
-     <widget class="Line" name="line">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2" colspan="2">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Рандомизация</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <string>Open</string>
       </property>
      </widget>
     </item>
@@ -74,6 +54,19 @@
       </property>
      </widget>
     </item>
+    <item row="3" column="2" colspan="2">
+     <widget class="QListWidget" name="listWidget"/>
+    </item>
+    <item row="1" column="2" colspan="2">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Рандомизация</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
     <item row="2" column="3">
      <widget class="QToolButton" name="toolButton">
       <property name="text">
@@ -81,13 +74,27 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="2" colspan="2">
-     <widget class="QListWidget" name="listWidget"/>
-    </item>
-    <item row="0" column="0">
-     <widget class="QPushButton" name="openPushButton">
+    <item row="1" column="0">
+     <widget class="QLabel" name="label">
       <property name="text">
-       <string>Open</string>
+       <string>Управление списками</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" rowspan="3">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2" colspan="2">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>clear</string>
       </property>
      </widget>
     </item>

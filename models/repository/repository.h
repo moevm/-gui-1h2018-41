@@ -16,6 +16,7 @@ public:
 
     void setContent(QString str);
     QList<RandomItemList> getContent();
+    void clear();
 
 signals:
 

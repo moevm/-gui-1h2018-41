@@ -29,6 +29,8 @@ private slots:
 
     void on_randomizePushButton_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -37,6 +39,7 @@ private:
     Repository repo;
 
     void initWidgets();
+    void clear();
 };
 
 #endif // MAINWINDOW_H

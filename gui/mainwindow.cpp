@@ -21,6 +21,17 @@ void MainWindow::initWidgets()
     removeToolBar(toolbar);
 }
 
+void MainWindow::clear()
+{
+    for(auto subWindow : ui->mdiArea->subWindowList())
+    {
+        subWindow->deleteLater();
+    }
+
+    m_listsWidgets.clear();
+    repo.clear();
+}
+
 void MainWindow::on_openPushButton_clicked()
 {
     on_actionOpen_triggered();
@@ -28,6 +39,8 @@ void MainWindow::on_openPushButton_clicked()
 
 void MainWindow::on_actionOpen_triggered()
 {
+    clear();
+
     QString path = QFileDialog::getOpenFileName(0, "Open File", "", "*.json");
     QFile file(path);
     if ((file.exists()) && (file.open(QIODevice::ReadOnly)))
@@ -57,7 +70,6 @@ void MainWindow::on_actionOpen_triggered()
         lists.push_back(listItems);
     }
 
-
     for(int i = 0; i < lists.size(); i++)
     {
         QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
@@ -81,4 +93,9 @@ void MainWindow::on_randomizePushButton_clicked()
     QStringList items = r.start();
     ui->listWidget->clear();
     ui->listWidget->addItems(items);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    clear();
 }

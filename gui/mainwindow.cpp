@@ -42,16 +42,6 @@ void MainWindow::initWidgets()
     repo.setContent(example);*/
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    for(auto subWindow : ui->mdiArea->subWindowList())
-    {
-        MyListWidget* list =
-                qobject_cast<MyListWidget*>(subWindow->widget());
-        qDebug() << list->getCurrentListState();
-    }
-}
-
 void MainWindow::on_openPushButton_clicked()
 {
     on_actionOpen_triggered();

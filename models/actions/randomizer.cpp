@@ -12,13 +12,8 @@ void Randomizer::setLists(const QList<QList<QMap<QString, QString> > > &lists)
 
 QStringList Randomizer::start()
 {
-    //qDebug() << "initial lists" << m_lists;
-    qDebug() << "";
     QList<QStringList> selectedItems = createSelectedItems();
-    //qDebug() << "only selected items" << selectedItems;
-    //qDebug() << "";
     selectedItems = mixListsItems(selectedItems);
-    qDebug() << "mixed items" << selectedItems;
     QStringList items = randomItems(selectedItems);
     return items;
 }

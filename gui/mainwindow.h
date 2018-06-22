@@ -23,8 +23,6 @@ public:
 
 private slots:
 
-    void on_pushButton_clicked();
-
     void on_openPushButton_clicked();
 
     void on_actionOpen_triggered();

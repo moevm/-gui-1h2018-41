@@ -21,6 +21,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    static QList<ListState> toGuiFormat(QList<RandomItemList> lists);
+    static QList<RandomItemList> toModelFormat(QList<ListState> listsStates);
+
 private slots:
 
     void on_actionOpen_triggered();

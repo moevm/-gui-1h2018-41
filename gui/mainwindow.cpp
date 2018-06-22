@@ -37,6 +37,47 @@ void MainWindow::clear()
     m_repo.clear();
 }
 
+QList<ListState> MainWindow::toGuiFormat(QList<RandomItemList> lists)
+{
+    QList<ListState> listWidgetsStates;
+    for(int i = 0; i < lists.size(); i++)
+    {
+        ListState listWidgetState;
+        for(size_t j = 0; j < lists[i].size(); j++)
+        {
+            RandomItem item = lists[i].get(j);
+            ItemState itemWidget;
+            itemWidget.title = item.getTitle();
+            itemWidget.count = item.getCount();
+            itemWidget.selected = item.getSelected();
+
+            listWidgetState.listName = lists[i].title();
+            listWidgetState.listItems.push_back(itemWidget);
+        }
+        listWidgetsStates.push_back(listWidgetState);
+    }
+    return listWidgetsStates;
+}
+
+QList<RandomItemList> MainWindow::toModelFormat(QList<ListState> listsStates)
+{
+    QList<RandomItemList> lists;
+    for(auto listState : listsStates)
+    {
+        RandomItemList list(listState.listName);
+        for(auto itemState : listState.listItems)
+        {
+            RandomItem item;
+            item.setTitle(itemState.title);
+            item.setCount(itemState.count);
+            item.setSelected(itemState.selected);
+            list.add(item);
+        }
+        lists.push_back(list);
+    }
+    return lists;
+}
+
 void MainWindow::on_actionOpen_triggered()
 {
     clear();
@@ -50,30 +91,11 @@ void MainWindow::on_actionOpen_triggered()
         m_repo.setContent(content);
     }
 
-    QList<RandomItemList> list = m_repo.getContent();
-
-    QList< QList<QMap<QString, QString> > > lists;
-    for(int i = 0; i < list.size(); i++)
-    {
-        QList< QMap<QString, QString> > listItems;
-        for(size_t j = 0; j < list[i].size(); j++)
-        {
-            RandomItem item = list[i].get(j);
-
-            QMap<QString, QString> itemMap;
-            itemMap.insert("title", item.getTitle());
-            itemMap.insert("count", QString::number(item.getCount()));
-            itemMap.insert("selected", QString::number(item.getSelected()));
-
-            listItems.push_back(itemMap);
-        }
-        lists.push_back(listItems);
-    }
-
-    for(int i = 0; i < lists.size(); i++)
+    QList<ListState> lists = toGuiFormat(m_repo.getContent());
+    for(auto list : lists)
     {
         QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
-        MyListWidget* myList = new MyListWidget(QStringLiteral("List") + QString::number(i), lists[i], w);
+        MyListWidget* myList = new MyListWidget(list, w);
         w->setWidget(myList);
         w->show();
     }
@@ -81,18 +103,34 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_randomizePushButton_clicked()
 {
-    QList<QList<QMap<QString, QString> > > listsStates;
+    QList<ListState> listsStates;
     for(auto subWindow : ui->mdiArea->subWindowList())
     {
         MyListWidget* list =
                 qobject_cast<MyListWidget*>(subWindow->widget());
         listsStates.push_back(list->getCurrentListState());
     }
+
+    // set content
+
+    m_repo.setContent(toModelFormat(listsStates));
+
+    QList<RandomItemList> lists = m_repo.getContent();
+
+
+    /*QStringList listsTitles;
+    QList<QList<QMap<QString, QString> > > listsItems;
+    for(auto list : listsStates)
+    {
+        listsTitles.push_back(list.first);
+        listsItems.push_back(list.second);
+    }*/
+
     Randomizer r;
-    r.setLists(listsStates);
-    QStringList items = r.start();
-    ui->listWidget->clear();
-    ui->listWidget->addItems(items);
+    r.setLists(lists);
+    QString results = r.start();
+    ui->plainTextEdit->clear();
+    ui->plainTextEdit->setPlainText(results);
 }
 
 void MainWindow::on_actionClear_triggered()

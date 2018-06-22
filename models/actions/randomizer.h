@@ -8,22 +8,33 @@
 
 #include "models/types/randomitemlist.h"
 
+struct RandomResults
+{
+    QString title;
+    QStringList items;
+};
+
 class Randomizer
 {
 public:
     explicit Randomizer();
 
-    void setLists(const QList<QList<QMap<QString, QString> > > &lists);
 
-    QStringList start();
+    void setLists(const QList<RandomItemList> &lists);
+
+    QString start();
 
 protected:
-    QList< QList<QMap<QString, QString> > > m_lists;
+    QList<RandomItemList> m_lists;
+
+    /*QStringList m_titles;
+    QList< QList<QMap<QString, QString> > > m_lists;*/
     std::random_device rd;
 
-    QList<QStringList> createSelectedItems();
-    QList<QStringList> mixListsItems(QList<QStringList> lists);
-    QStringList randomItems(QList<QStringList> lists);
+    QList<RandomResults> createSelectedItems();
+    QList<RandomResults> mixListsItems(QList<RandomResults> lists);
+    QList<RandomResults> randomItems(QList<RandomResults> lists);
+    QString toString(QList<RandomResults> results);
 };
 
 #endif // RANDOMIZER_H

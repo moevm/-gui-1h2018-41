@@ -32,6 +32,11 @@ void Repository::setContent(QString str)
     }
 }
 
+void Repository::setContent(QList<RandomItemList> lists)
+{
+    m_lists = lists;
+}
+
 QList<RandomItemList> Repository::getContent()
 {
     return m_lists;

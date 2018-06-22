@@ -42,7 +42,8 @@ HEADERS += \
     models/types/randomitem.h \
     models/types/randomitemlist.h \
     models/repository/repository.h \
-    models/actions/randomizer.h
+    models/actions/randomizer.h \
+    models/structs.h
 
 FORMS += \
         gui/mainwindow.ui

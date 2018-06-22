@@ -11,20 +11,43 @@
 
 #include "gui/widgets/mylistwidgetitem.h"
 
+struct ItemState
+{
+    QString title;
+    bool selected;
+    size_t count;
+
+    bool operator != (const ItemState &state)
+    {
+        return (title != state.title) || (selected != state.selected) || (count != state.count);
+    }
+
+    bool operator == (const ItemState &state)
+    {
+        return (title == state.title) && (selected == state.selected) && (count == state.count);
+    }
+};
+
+struct ListState
+{
+    QString listName;
+    QList<ItemState> listItems;
+};
+
 class MyListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MyListWidget(QString name, QList< QMap<QString, QString> > items, QWidget *parent = nullptr);
+    explicit MyListWidget(ListState state, QWidget *parent = nullptr);
 
-    QList<QMap<QString, QString> > getCurrentListState();
+    ListState getCurrentListState();
 
 private:
-    QString m_listName;
-    QList< QMap<QString, QString> > m_list;
+    ListState m_state;
 
+    QLineEdit* m_titleWidget;
     QListWidget* m_listWidget;
-    void updateList();
+    void updateWidgets();
 
 signals:
 
@@ -34,6 +57,7 @@ private slots:
     void addItem();
     void deleteItem();
     void onItemChanged();
+    void onTitleChanged();
 };
 
 #endif // MYLISTWIDGET_H

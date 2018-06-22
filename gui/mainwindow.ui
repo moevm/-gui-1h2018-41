@@ -15,7 +15,14 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0" rowspan="2">
+    <item row="1" column="2">
+     <widget class="QPushButton" name="randomizePushButton">
+      <property name="text">
+       <string>Рандомизация:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" rowspan="3">
      <widget class="QMdiArea" name="mdiArea">
       <property name="verticalScrollBarPolicy">
        <enum>Qt::ScrollBarAsNeeded</enum>
@@ -40,10 +47,13 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QPushButton" name="randomizePushButton">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
       <property name="text">
-       <string>Рандомизация:</string>
+       <string>Управление списками</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -57,23 +67,17 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="2" colspan="2">
-     <widget class="QListWidget" name="listWidget"/>
-    </item>
-    <item row="0" column="1" rowspan="3">
+    <item row="0" column="1" rowspan="4">
      <widget class="Line" name="line">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Управление списками</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+    <item row="2" column="2" colspan="2">
+     <widget class="QPlainTextEdit" name="plainTextEdit">
+      <property name="readOnly">
+       <bool>true</bool>
       </property>
      </widget>
     </item>

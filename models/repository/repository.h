@@ -15,6 +15,7 @@ public:
     explicit Repository (QObject *parent = nullptr);
 
     void setContent(QString str);
+    void setContent(QList<RandomItemList> lists);
     QList<RandomItemList> getContent();
     void clear();
 

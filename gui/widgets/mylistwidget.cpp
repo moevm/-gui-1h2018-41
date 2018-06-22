@@ -1,9 +1,8 @@
 #include "mylistwidget.h"
 
-MyListWidget::MyListWidget(QString name, QList<QMap<QString, QString> > items, QWidget *parent) :
+MyListWidget::MyListWidget(ListState state, QWidget *parent) :
     QWidget(parent),
-    m_listName(name),
-    m_list(items)
+    m_state(state)
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     this->setLayout(mainLayout);
@@ -13,9 +12,10 @@ MyListWidget::MyListWidget(QString name, QList<QMap<QString, QString> > items, Q
     container->setLayout(new QVBoxLayout(container));
     container->layout()->setContentsMargins(0, 0, 0, 0);
 
-    QLineEdit* title = new QLineEdit(m_listName, container);
-    title->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    container->layout()->addWidget(title);
+    m_titleWidget = new QLineEdit(m_state.listName, container);
+    m_titleWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onTitleChanged()));
+    container->layout()->addWidget(m_titleWidget);
         QFrame* mainFrame = new QFrame(container);
         mainFrame->setLayout(new QHBoxLayout(mainFrame));
         mainFrame->layout()->setContentsMargins(0, 0, 0, 0);
@@ -34,86 +34,63 @@ MyListWidget::MyListWidget(QString name, QList<QMap<QString, QString> > items, Q
             listFrame->setLayout(new QVBoxLayout(listFrame));
             listFrame->layout()->setContentsMargins(0, 0, 0, 0);
                 m_listWidget = new QListWidget(container);
-                updateList();
+                updateWidgets();
                 listFrame->layout()->addWidget(m_listWidget);
             mainFrame->layout()->addWidget(listFrame);
         container->layout()->addWidget(mainFrame);
         this->layout()->addWidget(container);
 }
 
-QList< QMap<QString, QString> > MyListWidget::getCurrentListState()
+ListState MyListWidget::getCurrentListState()
 {
-    QList< QMap<QString, QString> > items;
-    for(int i = 0; i < m_listWidget->count(); i++)
-    {
-        QMap<QString, QString> itemMap;
-        MyListWidgetItem* itemWidget =
-                qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
-        itemMap.insert(QString("title"), itemWidget->title());
-        itemMap.insert(QString("count"), QString::number(itemWidget->count()));
-        itemMap.insert(QString("checked"), QString::number(itemWidget->checked()));
-
-        items.push_back(itemMap);
-    }
-    return items;
+    return m_state;
 }
 
-void MyListWidget::updateList()
+void MyListWidget::updateWidgets()
 {
     m_listWidget->clear();
 
-    for(auto item : m_list)
+    m_titleWidget->setText(m_state.listName);
+    for(auto item : m_state.listItems)
     {
         QListWidgetItem* listItem = new QListWidgetItem(m_listWidget);
-        MyListWidgetItem* widget = new MyListWidgetItem(item["title"],
-                item["count"].toUInt(),
-                item["selected"].toInt(),
-                m_listWidget);
+        MyListWidgetItem* widget = new MyListWidgetItem(item.title,
+                                                        item.count,
+                                                        item.selected,
+                                                        m_listWidget);
         connect(widget, SIGNAL(save()), this, SLOT(onItemChanged()));
         listItem->setSizeHint(widget->minimumSizeHint());
         m_listWidget->addItem(listItem);
         m_listWidget->setItemWidget(listItem, widget);
     }
-
-    /*for(int i = 0; i < m_items.size(); i++)
-    {
-        QListWidgetItem* listItem = new QListWidgetItem(m_listWidget);
-        RandomItem item = m_items.get(i);
-        MyListWidgetItem* widget = new MyListWidgetItem(item.getTitle(), item.getCount(), item.getSelected(), m_listWidget);
-        connect(widget, SIGNAL(save()), this, SLOT(onItemChanged()));
-        listItem->setSizeHint(widget->minimumSizeHint());
-        m_listWidget->addItem(listItem);
-        m_listWidget->setItemWidget(listItem, widget);
-    }*/
 }
 
 void MyListWidget::addItem()
 {
-    QMap<QString, QString> emptyItem;
-    emptyItem.insert("title", "");
-    emptyItem.insert("count", "1");
-    emptyItem.insert("selected", "0");
-
-    m_list.push_back(emptyItem);
-    updateList();
+    ItemState emptyItem;
+    emptyItem.title = "";
+    emptyItem.count = 1;
+    emptyItem.selected = false;
+    m_state.listItems.push_back(emptyItem);
+    updateWidgets();
 }
 
 void MyListWidget::deleteItem()
 {
     MyListWidgetItem* item = qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->currentItem()));
 
-    QMap<QString, QString> itemContent;
-    itemContent.insert("title", item->title());
-    itemContent.insert("count", QString::number(item->count()));
-    itemContent.insert("selected", QString::number(item->checked()));
+    ItemState content;
+    content.title = item->title();
+    content.count = item->count();
+    content.selected = item->checked();
 
-    m_list.removeOne(itemContent);
-    updateList();
+    m_state.listItems.removeOne(content);
+    updateWidgets();
 }
 
 void MyListWidget::onItemChanged()
 {
-    if(m_listWidget->count() == m_list.size())
+    if(m_listWidget->count() == m_state.listItems.size())
     {
         for(int i = 0; i < m_listWidget->count(); i++)
         {
@@ -121,13 +98,18 @@ void MyListWidget::onItemChanged()
                     qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
             disconnect(itemWidget, SIGNAL(save()), this, SLOT(onItemChanged()));
 
-            QMap<QString, QString> item;
-            item.insert("title", itemWidget->title());
-            item.insert("count", QString::number(itemWidget->count()));
-            item.insert("selected", QString::number(itemWidget->checked()));
+            ItemState item;
+            item.title = itemWidget->title();
+            item.count = itemWidget->count();
+            item.selected = itemWidget->checked();
 
-            m_list[i] = item;
+            m_state.listItems[i] = item;
         }
         //updateList();
     }
+}
+
+void MyListWidget::onTitleChanged()
+{
+    m_state.listName = m_titleWidget->text();
 }

@@ -18,8 +18,11 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets()
 {
     auto toolbar = ui->mainToolBar;
-    toolbar->show();
+    toolbar->addAction(ui->actionNew);
     toolbar->addAction(ui->actionOpen);
+    toolbar->addAction(ui->actionSave);
+    toolbar->addAction(ui->actionAdd_List);
+    toolbar->addAction(ui->actionRemove_List);
     toolbar->addAction(ui->actionClear);
 }
 

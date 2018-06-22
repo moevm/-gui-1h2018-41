@@ -20,15 +20,15 @@ void MainWindow::initWidgets()
     auto toolbar = ui->mainToolBar;
     removeToolBar(toolbar);
 
-    QStringList exampleList = {"123", "test", "asd"};
+    //QStringList exampleList = {"123", "test", "asd"};
 
-    for(int i = 0; i < 2; i++)
+    /*for(int i = 0; i < 2; i++)
     {
         QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
         MyListWidget* myList = new MyListWidget(QStringLiteral("List") + QString::number(i), exampleList, w);
         w->setWidget(myList);
         w->show();
-    }
+    }*/
 
     // parse
     //QString example = "{[{\"list1\": [{\"title1\", \"1\", \"100\"}]}]}";
@@ -71,6 +71,33 @@ void MainWindow::on_actionOpen_triggered()
             qDebug()  << "item" << element.getTitle() << element.getSelected() << element.getCount();
         }
         qDebug() << "";
+    }
+
+    QList< QList<QMap<QString, QString> > > lists;
+    for(int i = 0; i < list.size(); i++)
+    {
+        QList< QMap<QString, QString> > listItems;
+        for(size_t j = 0; j < list[i].size(); j++)
+        {
+            RandomItem item = list[i].get(j);
+
+            QMap<QString, QString> itemMap;
+            itemMap.insert("title", item.getTitle());
+            itemMap.insert("count", QString::number(item.getCount()));
+            itemMap.insert("selected", QString::number(item.getSelected()));
+
+            listItems.push_back(itemMap);
+        }
+        lists.push_back(listItems);
+    }
+
+
+    for(int i = 0; i < lists.size(); i++)
+    {
+        QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
+        MyListWidget* myList = new MyListWidget(QStringLiteral("List") + QString::number(i), lists[i], w);
+        w->setWidget(myList);
+        w->show();
     }
 }
 

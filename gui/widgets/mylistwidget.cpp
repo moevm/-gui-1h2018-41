@@ -1,9 +1,9 @@
 #include "mylistwidget.h"
 
-MyListWidget::MyListWidget(QString name, QStringList items, QWidget *parent) :
+MyListWidget::MyListWidget(QString name, QList<QMap<QString, QString> > items, QWidget *parent) :
     QWidget(parent),
     m_listName(name),
-    m_items(items)
+    m_list(items)
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     this->setLayout(mainLayout);
@@ -61,40 +61,72 @@ QList< QMap<QString, QString> > MyListWidget::getCurrentListState()
 void MyListWidget::updateList()
 {
     m_listWidget->clear();
-    for(auto item : m_items)
+
+    for(auto item : m_list)
     {
         QListWidgetItem* listItem = new QListWidgetItem(m_listWidget);
-        MyListWidgetItem* widget = new MyListWidgetItem(item, 1, false, m_listWidget);
+        MyListWidgetItem* widget = new MyListWidgetItem(item["title"],
+                item["count"].toUInt(),
+                item["selected"].toInt(),
+                m_listWidget);
         connect(widget, SIGNAL(save()), this, SLOT(onItemChanged()));
         listItem->setSizeHint(widget->minimumSizeHint());
         m_listWidget->addItem(listItem);
         m_listWidget->setItemWidget(listItem, widget);
     }
+
+    /*for(int i = 0; i < m_items.size(); i++)
+    {
+        QListWidgetItem* listItem = new QListWidgetItem(m_listWidget);
+        RandomItem item = m_items.get(i);
+        MyListWidgetItem* widget = new MyListWidgetItem(item.getTitle(), item.getCount(), item.getSelected(), m_listWidget);
+        connect(widget, SIGNAL(save()), this, SLOT(onItemChanged()));
+        listItem->setSizeHint(widget->minimumSizeHint());
+        m_listWidget->addItem(listItem);
+        m_listWidget->setItemWidget(listItem, widget);
+    }*/
 }
 
 void MyListWidget::addItem()
 {
-    m_items.append("");
+    QMap<QString, QString> emptyItem;
+    emptyItem.insert("title", "");
+    emptyItem.insert("count", "1");
+    emptyItem.insert("selected", "0");
+
+    m_list.push_back(emptyItem);
     updateList();
 }
 
 void MyListWidget::deleteItem()
 {
     MyListWidgetItem* item = qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->currentItem()));
-    m_items.removeOne(item->title());
+
+    QMap<QString, QString> itemContent;
+    itemContent.insert("title", item->title());
+    itemContent.insert("count", QString::number(item->count()));
+    itemContent.insert("selected", QString::number(item->checked()));
+
+    m_list.removeOne(itemContent);
     updateList();
 }
 
 void MyListWidget::onItemChanged()
 {
-    if(m_listWidget->count() == m_items.size())
+    if(m_listWidget->count() == m_list.size())
     {
         for(int i = 0; i < m_listWidget->count(); i++)
         {
             MyListWidgetItem* itemWidget =
                     qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
             disconnect(itemWidget, SIGNAL(save()), this, SLOT(onItemChanged()));
-            m_items[i] = itemWidget->title();
+
+            QMap<QString, QString> item;
+            item.insert("title", itemWidget->title());
+            item.insert("count", QString::number(itemWidget->count()));
+            item.insert("selected", QString::number(itemWidget->checked()));
+
+            m_list[i] = item;
         }
         //updateList();
     }

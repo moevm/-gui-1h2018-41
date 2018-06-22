@@ -15,13 +15,13 @@ class MyListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MyListWidget(QString name, QStringList items, QWidget *parent = nullptr);
+    explicit MyListWidget(QString name, QList< QMap<QString, QString> > items, QWidget *parent = nullptr);
 
     QList<QMap<QString, QString> > getCurrentListState();
 
 private:
     QString m_listName;
-    QStringList m_items;
+    QList< QMap<QString, QString> > m_list;
 
     QListWidget* m_listWidget;
     void updateList();

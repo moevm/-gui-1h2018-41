@@ -34,7 +34,7 @@
        <enum>QAbstractScrollArea::AdjustToContents</enum>
       </property>
       <property name="background">
-       <brush brushstyle="Dense7Pattern">
+       <brush brushstyle="Dense2Pattern">
         <color alpha="255">
          <red>191</red>
          <green>191</green>

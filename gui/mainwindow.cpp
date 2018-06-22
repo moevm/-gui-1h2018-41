@@ -34,7 +34,7 @@ void MainWindow::clear()
     }
 
     m_listsWidgets.clear();
-    repo.clear();
+    m_repo.clear();
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -47,10 +47,10 @@ void MainWindow::on_actionOpen_triggered()
     {
         QString content = file.readAll();
         file.close();
-        repo.setContent(content);
+        m_repo.setContent(content);
     }
 
-    QList<RandomItemList> list = repo.getContent();
+    QList<RandomItemList> list = m_repo.getContent();
 
     QList< QList<QMap<QString, QString> > > lists;
     for(int i = 0; i < list.size(); i++)

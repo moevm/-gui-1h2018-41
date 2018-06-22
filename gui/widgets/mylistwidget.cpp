@@ -14,6 +14,7 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
 
     m_titleWidget = new QLineEdit(m_state.listName, container);
     m_titleWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    m_titleWidget->setStyleSheet("border:1px solid #dfdfdf; border-radius: 5px; padding:5px;");
     QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onTitleChanged()));
     container->layout()->addWidget(m_titleWidget);
         QFrame* mainFrame = new QFrame(container);

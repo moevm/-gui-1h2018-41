@@ -14,6 +14,7 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     container->setLayout(new QHBoxLayout(container));
     container->layout()->setContentsMargins(0, 0, 0, 0);
     container->layout()->setAlignment(Qt::AlignLeft);
+    container->setStyleSheet("background-color:#eee; border-radius:5px; padding:5px;");
 
     m_selectedCheckBox = new QCheckBox(container);
     if(m_checked)
@@ -28,11 +29,14 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     container->layout()->addWidget(m_selectedCheckBox);
 
     m_itemWidget = new QLineEdit(m_title, container);
+    m_itemWidget->setStyleSheet("background-color:#fff; border:1px solid #dfdfdf; border-radius:5px; padding:5px;");
     QObject::connect(m_itemWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_itemWidget);
 
     m_countWidget = new QLineEdit(QString::number(m_count), container);
     m_countWidget->setMaximumWidth(50);
+    m_countWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    m_countWidget->setStyleSheet("background-color:#fff; border:1px solid #dfdfdf; border-radius:5px; padding:5px;");
     QObject::connect(m_countWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_countWidget);
 

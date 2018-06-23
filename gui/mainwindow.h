@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMdiSubWindow>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "widgets/mylistwidget.h"
 #include "models/repository/repository.h"
@@ -23,6 +24,7 @@ public:
 
     static QList<ListState> toGuiFormat(QList<RandomItemList> lists);
     static QList<RandomItemList> toModelFormat(QList<ListState> listsStates);
+    static QString toFileFormat(QList<RandomItemList> lists);
 
 private slots:
 
@@ -32,12 +34,15 @@ private slots:
 
     void on_actionClear_triggered();
 
+    void on_actionSave_triggered();
+
 private:
     Ui::MainWindow *ui;
 
     QList<MyListWidget*> m_listsWidgets;
 
     Repository m_repo;
+    QString path;
 
     void initWidgets();
     void clear();

@@ -10,6 +10,7 @@
 #include "models/repository/repository.h"
 #include "models/actions/randomizer.h"
 #include "models/actions/savetofile.h"
+#include "models/actions/openfile.h"
 
 namespace Ui {
 class MainWindow;
@@ -42,7 +43,6 @@ private:
     QList<MyListWidget*> m_listsWidgets;
 
     Repository m_repo;
-    QString path;
 
     void initWidgets();
     void clear();

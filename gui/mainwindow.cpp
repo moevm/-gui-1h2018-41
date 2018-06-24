@@ -18,7 +18,6 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets()
 {
     auto toolbar = ui->mainToolBar;
-    toolbar->addAction(ui->actionNew);
     toolbar->addAction(ui->actionOpen);
     toolbar->addAction(ui->actionSave);
     toolbar->addAction(ui->actionAdd_List);
@@ -84,14 +83,9 @@ void MainWindow::on_actionOpen_triggered()
 {
     clear();
 
-    path = QFileDialog::getOpenFileName(0, "Open File", "", "*.json");
-    QFile file(path);
-    if ((file.exists()) && (file.open(QIODevice::ReadOnly)))
-    {
-        QString content = file.readAll();
-        file.close();
-        m_repo.setContent(content);
-    }
+    OpenFile open("");
+    m_repo.setContent(open.start());
+    m_repo.setFilePath(open.path());
 
     QList<ListState> lists = toGuiFormat(m_repo.getContent());
     for(auto list : lists)
@@ -152,7 +146,7 @@ void MainWindow::on_actionSave_triggered()
 
     QList<RandomItemList> lists = m_repo.getContent();
 
-    SaveToFile s(path);
+    SaveToFile s(m_repo.getFilePath());
     s.setContent(lists);
     s.start();
 }

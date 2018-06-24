@@ -14,10 +14,12 @@ class Repository : public QObject
 public:
     explicit Repository (QObject *parent = nullptr);
 
-    void setContent(QString str);
     void setContent(QList<RandomItemList> lists);
     QList<RandomItemList> getContent();
     void clear();
+
+    QString getFilePath() const;
+    void setFilePath(const QString &filePath);
 
 signals:
 
@@ -25,6 +27,7 @@ public slots:
 
 protected:
     QList<RandomItemList> m_lists;
+    QString m_filePath = "";
 };
 
 #endif // REPOSITORY_H

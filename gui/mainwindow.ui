@@ -111,7 +111,6 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionAdd_List"/>
@@ -158,11 +157,6 @@
   <action name="actionRemove_List">
    <property name="text">
     <string>Remove List</string>
-   </property>
-  </action>
-  <action name="actionNew">
-   <property name="text">
-    <string>New</string>
    </property>
   </action>
  </widget>

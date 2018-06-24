@@ -37,10 +37,10 @@ private slots:
 
     void on_actionSave_triggered();
 
+    void on_actionAdd_List_triggered();
+
 private:
     Ui::MainWindow *ui;
-
-    QList<MyListWidget*> m_listsWidgets;
 
     Repository m_repo;
 

@@ -31,8 +31,6 @@ void MainWindow::clear()
     {
         subWindow->deleteLater();
     }
-
-    m_listsWidgets.clear();
     m_repo.clear();
 }
 
@@ -149,4 +147,13 @@ void MainWindow::on_actionSave_triggered()
     SaveToFile s(m_repo.getFilePath());
     s.setContent(lists);
     s.start();
+}
+
+void MainWindow::on_actionAdd_List_triggered()
+{
+    ListState list;
+    QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
+    MyListWidget* myList = new MyListWidget(list, w);
+    w->setWidget(myList);
+    w->show();
 }

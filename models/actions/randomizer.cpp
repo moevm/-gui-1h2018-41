@@ -100,7 +100,7 @@ QString Randomizer::toString(QList<QPair<RandomResults, size_t> > results)
         output += QStringLiteral("From list ") + result.first.title + QStringLiteral(" selected\n");
         for(auto item : result.first.items)
         {
-            output += QStringLiteral("     ") + item + QStringLiteral("\n");
+            output += QStringLiteral("* ") + item + QStringLiteral("\n");
         }
         output += QStringLiteral("\n");
     }

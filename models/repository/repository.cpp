@@ -17,6 +17,7 @@ QList<RandomItemList> Repository::getContent()
 
 void Repository::clear()
 {
+    m_filePath = "";
     m_lists.clear();
 }
 

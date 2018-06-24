@@ -128,6 +128,7 @@ void MainWindow::on_randomizePushButton_clicked()
 void MainWindow::on_actionClear_triggered()
 {
     clear();
+    m_repo.clear();
 }
 
 void MainWindow::on_actionSave_triggered()

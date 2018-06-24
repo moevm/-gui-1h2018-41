@@ -23,7 +23,7 @@ void SaveToFile::start()
     QFile test(m_filePath);
     if(!test.exists())
     {
-        m_filePath = QFileDialog::getSaveFileName(nullptr, "Save", "");
+        m_filePath = QFileDialog::getSaveFileName(nullptr, "Save", "", "*.json");
     }
     QFile file(m_filePath);
 

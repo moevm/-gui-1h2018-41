@@ -80,48 +80,6 @@ QList<RandomItemList> MainWindow::toModelFormat(QList<ListState> listsStates)
     return lists;
 }
 
-QString MainWindow::toFileFormat(QList<RandomItemList> lists)
-{
-    QString str;
-    str = "{\"lists\":[\n";
-    for(int i = 0; i < lists.size(); i++)
-    {
-        str = str + "    {\"" + lists[i].title() + "\": [ ";
-        for(size_t j = 0; j < lists[i].size(); j++)
-        {
-            RandomItem item = lists[i].get(j);
-
-            QString title = item.getTitle();
-            QString str_count = QString::number(item.getCount());
-            QString str_selected = QString::number(item.getSelected());
-
-            str = str + "[";
-            str = str + "\"" + title + "\", " + str_count + ", "+ str_selected;
-
-            if (j != lists[i].size()-1)
-            {
-                str = str + "],";
-            }
-            else
-            {
-                str = str + "]";
-            }
-        }
-        str = str + " ]";
-
-        if (i != lists.size()-1)
-        {
-            str = str + "},\n";
-        }
-        else
-        {
-            str = str + "}\n";
-        }
-    }
-    str = str + "]}\n";
-    return str;
-}
-
 void MainWindow::on_actionOpen_triggered()
 {
     clear();
@@ -182,9 +140,6 @@ void MainWindow::on_actionClear_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-    QFile file(path);
-    file.resize(0);
-
     QList<ListState> listsStates;
     for(auto subWindow : ui->mdiArea->subWindowList())
     {
@@ -196,10 +151,8 @@ void MainWindow::on_actionSave_triggered()
     m_repo.setContent(toModelFormat(listsStates));
 
     QList<RandomItemList> lists = m_repo.getContent();
-    QString str = toFileFormat(lists);
 
-    file.open(QIODevice::WriteOnly);
-    QTextStream in(&file);
-    in << str;
-    file.close();
+    SaveToFile s(path);
+    s.setContent(lists);
+    s.start();
 }

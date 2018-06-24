@@ -9,6 +9,7 @@
 #include "widgets/mylistwidget.h"
 #include "models/repository/repository.h"
 #include "models/actions/randomizer.h"
+#include "models/actions/savetofile.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,7 +25,6 @@ public:
 
     static QList<ListState> toGuiFormat(QList<RandomItemList> lists);
     static QList<RandomItemList> toModelFormat(QList<ListState> listsStates);
-    static QString toFileFormat(QList<RandomItemList> lists);
 
 private slots:
 

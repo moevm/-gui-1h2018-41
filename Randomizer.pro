@@ -32,7 +32,8 @@ SOURCES += \
     models/types/randomitem.cpp \
     models/types/randomitemlist.cpp \
     models/repository/repository.cpp \
-    models/actions/randomizer.cpp
+    models/actions/randomizer.cpp \
+    models/actions/savetofile.cpp
 
 HEADERS += \
         gui/mainwindow.h \
@@ -43,7 +44,8 @@ HEADERS += \
     models/types/randomitemlist.h \
     models/repository/repository.h \
     models/actions/randomizer.h \
-    models/structs.h
+    models/structs.h \
+    models/actions/savetofile.h
 
 FORMS += \
         gui/mainwindow.ui

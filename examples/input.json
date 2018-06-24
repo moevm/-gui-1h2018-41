@@ -1,5 +1,1 @@
-{"lists":[
-    {"list1title": {"find":2, "items": [["title1", 1, 900], ["title2", 1, 2], ["title3", 1, 5]]}},
-    {"list2title": {"find":2, "items": [["title1", 1, 9], ["title2", 1, 2], ["title3", 1, 5]]}},
-    {"list3title": {"find":2, "items": [["title1", 1, 3], ["title2", 1, 2], ["title3", 1, 5]]}},
-]}
+{"lists":[{"list1":{"find":1,"items":[{"count":90,"selected":true,"title":"item1"},{"count":2,"selected":true,"title":"item2"},{"count":5,"selected":true,"title":"item3"}]}},{"list2title":{"find":2,"items":[{"count":9,"selected":true,"title":"item1"},{"count":2,"selected":false,"title":"title2"},{"count":5,"selected":true,"title":"title3"},{"count":1,"selected":true,"title":"item123"}]}},{"list3title":{"find":3,"items":[{"count":3,"selected":true,"title":"title1"},{"count":2,"selected":true,"title":"title2"},{"count":5,"selected":true,"title":"title3"},{"count":1,"selected":false,"title":"s,mnasd"},{"count":1,"selected":false,"title":"a,sm,"}]}}]}

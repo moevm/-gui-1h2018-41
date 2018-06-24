@@ -27,10 +27,10 @@ void Repository::setContent(QString str)
         listTmp.setNeedToFind(needToFind);
         for(int j = 0; j < items.size(); j++)
         {
-            QtJson::JsonArray item = items[j].toList();
-            QString title = item.at(0).toString();
-            bool selected = item.at(1).toInt();
-            int count = item.at(2).toInt();
+            QtJson::JsonObject item = items[j].toMap();
+            QString title = item["title"].toString();
+            bool selected = item["selected"].toBool();
+            int count = item["count"].toUInt();
             listTmp.add(RandomItem(title, selected, count));
         }
         m_lists.append(listTmp);

@@ -157,3 +157,25 @@ void MainWindow::on_actionAdd_List_triggered()
     w->setWidget(myList);
     w->show();
 }
+
+void MainWindow::on_actionRemove_List_triggered()
+{
+    SelectListDialog* selectList = new SelectListDialog(this);
+    QObject::connect(selectList, SIGNAL(selectList(QString)), this, SLOT(removeList(QString)));
+    selectList->exec();
+    QObject::disconnect(selectList, SIGNAL(selectList(QString)), this, SLOT(removeList(QString)));
+}
+
+void MainWindow::removeList(QString listTitle)
+{
+    for(auto subWindow : ui->mdiArea->subWindowList())
+    {
+        MyListWidget* list =
+                qobject_cast<MyListWidget*>(subWindow->widget());
+        ListState state = list->getCurrentListState();
+        if(state.listName == listTitle)
+        {
+            subWindow->deleteLater();
+        }
+    }
+}

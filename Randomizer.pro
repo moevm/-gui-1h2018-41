@@ -34,7 +34,8 @@ SOURCES += \
     models/repository/repository.cpp \
     models/actions/randomizer.cpp \
     models/actions/savetofile.cpp \
-    models/actions/openfile.cpp
+    models/actions/openfile.cpp \
+    gui/selectlistdialog.cpp
 
 HEADERS += \
         gui/mainwindow.h \
@@ -47,7 +48,9 @@ HEADERS += \
     models/actions/randomizer.h \
     models/structs.h \
     models/actions/savetofile.h \
-    models/actions/openfile.h
+    models/actions/openfile.h \
+    gui/selectlistdialog.h
 
 FORMS += \
-        gui/mainwindow.ui
+        gui/mainwindow.ui \
+    gui/selectlistdialog.ui

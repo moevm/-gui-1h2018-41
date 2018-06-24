@@ -12,6 +12,8 @@
 #include "models/actions/savetofile.h"
 #include "models/actions/openfile.h"
 
+#include "gui/selectlistdialog.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -38,6 +40,10 @@ private slots:
     void on_actionSave_triggered();
 
     void on_actionAdd_List_triggered();
+
+    void on_actionRemove_List_triggered();
+
+    void removeList(QString listTitle);
 
 private:
     Ui::MainWindow *ui;

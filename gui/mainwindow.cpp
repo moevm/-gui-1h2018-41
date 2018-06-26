@@ -91,6 +91,7 @@ void MainWindow::on_actionOpen_triggered()
         QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
         MyListWidget* myList = new MyListWidget(list, w);
         w->setWidget(myList);
+        w->adjustSize();
         w->show();
     }
 }
@@ -156,6 +157,7 @@ void MainWindow::on_actionAdd_List_triggered()
     QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
     MyListWidget* myList = new MyListWidget(list, w);
     w->setWidget(myList);
+    w->adjustSize();
     w->show();
 }
 

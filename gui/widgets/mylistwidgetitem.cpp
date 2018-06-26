@@ -30,6 +30,7 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
 
     m_titleWidget = new QLineEdit(m_title, container);
     m_titleWidget->setStyleSheet("background-color:#fff; border:1px solid #dfdfdf; border-radius:5px; padding:5px;");
+    m_titleWidget->setPlaceholderText("Элемент для рандомизации");
     QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_titleWidget);
 

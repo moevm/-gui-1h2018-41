@@ -16,8 +16,9 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
     titleFrame->setLayout(new QHBoxLayout(titleFrame));
     titleFrame->layout()->setContentsMargins(0, 0, 0, 0);
         m_titleWidget = new QLineEdit(m_state.listName, titleFrame);
-        m_titleWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        //m_titleWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         m_titleWidget->setStyleSheet("border:1px solid #dfdfdf; border-radius: 5px; padding:5px;");
+        m_titleWidget->setPlaceholderText("Введите название списка");
         QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onTitleChanged()));
         titleFrame->layout()->addWidget(m_titleWidget);
 

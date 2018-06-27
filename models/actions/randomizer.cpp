@@ -12,14 +12,47 @@ void Randomizer::setLists(const QList<RandomItemList> &lists)
 
 QString Randomizer::start()
 {
+    /*for(auto item : m_lists)
+    {
+        qDebug() << "list" << item.title();
+
+        for(int i = 0; i < item.size(); i++)
+        {
+            RandomItem tmp = item.get(i);
+            qDebug() << tmp.getTitle() << tmp.getSelected() << tmp.getCount();
+        }
+    }*/
+
     QList< QPair<RandomResults, size_t> > results = createSelectedItems();
-    //qDebug() << "filled";
+    /*qDebug() << "filled";
+    for(auto res : results)
+    {
+        qDebug() << "list" << res.first.title << res.second;
+        qDebug() << res.first.items;
+        qDebug() << "";
+    }*/
+
+
     results = mixListsItems(results);
-    //qDebug() << "mixed";
+    /*qDebug() << "mixed";
+    for(auto res : results)
+    {
+        qDebug() << "list" << res.first.title << res.second;
+        qDebug() << res.first.items;
+        qDebug() << "";
+    }*/
+
     results = randomItems(results);
-    //qDebug() << "randomized";
+    /*qDebug() << "randomized";
+    for(auto res : results)
+    {
+        qDebug() << "list" << res.first.title << res.second;
+        qDebug() << res.first.items;
+        qDebug() << "";
+    }*/
+
     QString output = toString(results);
-    //qDebug() << "converted";
+    //qDebug() << "converted" << output;
     return output;
 }
 
@@ -79,11 +112,11 @@ QList< QPair<RandomResults, size_t> > Randomizer::randomItems(QList< QPair<Rando
             RandomResults listRandomResult;
             listRandomResult.title = list.first.title;
 
-            std::mt19937 g(rd());
             std::uniform_int_distribution<int> randomItemIndex(0, allListItems.size() - 1);
+            qDebug() << randomItemIndex(rng);
             for(size_t i = 0; i < list.second; i++)
             {
-                int index = randomItemIndex(g);
+                int index = randomItemIndex(rng);
                 listRandomResult.items.push_back(allListItems[index]);
             }
             allRandomListsItems.push_back(QPair<RandomResults, size_t>(listRandomResult, list.second));

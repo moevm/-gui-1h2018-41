@@ -5,8 +5,12 @@
 
 #include <random>
 #include <algorithm>
+#include <chrono>
 
 #include "models/types/randomitemlist.h"
+
+static std::random_device rd;
+static std::mt19937 rng(rd());
 
 struct RandomResults
 {
@@ -26,10 +30,6 @@ public:
 
 protected:
     QList<RandomItemList> m_lists;
-
-    /*QStringList m_titles;
-    QList< QList<QMap<QString, QString> > > m_lists;*/
-    std::random_device rd;
 
     QList< QPair<RandomResults, size_t> > createSelectedItems();
     QList< QPair<RandomResults, size_t> > mixListsItems(QList< QPair<RandomResults, size_t> > lists);

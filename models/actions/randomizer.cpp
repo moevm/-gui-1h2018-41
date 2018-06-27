@@ -113,7 +113,6 @@ QList< QPair<RandomResults, size_t> > Randomizer::randomItems(QList< QPair<Rando
             listRandomResult.title = list.first.title;
 
             std::uniform_int_distribution<int> randomItemIndex(0, allListItems.size() - 1);
-            qDebug() << randomItemIndex(rng);
             for(size_t i = 0; i < list.second; i++)
             {
                 int index = randomItemIndex(rng);

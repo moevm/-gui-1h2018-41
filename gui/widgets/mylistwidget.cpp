@@ -33,6 +33,18 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
         mainFrame->setLayout(new QVBoxLayout(mainFrame));
         mainFrame->layout()->setContentsMargins(0, 0, 0, 0);
 
+            QFrame* selectionFrame = new QFrame(mainFrame);
+            selectionFrame->setLayout(new QHBoxLayout(selectionFrame));
+            selectionFrame->layout()->setContentsMargins(0, 0, 0, 0);
+            selectionFrame->layout()->setAlignment(Qt::AlignTop);
+                QPushButton* selectAllButton = new QPushButton("Выделить все", selectionFrame);
+                QObject::connect(selectAllButton, SIGNAL(clicked(bool)), this, SLOT(selectAll()));
+                selectionFrame->layout()->addWidget(selectAllButton);
+                QPushButton* unSelectAllButton = new QPushButton("Снять все", selectionFrame);
+                QObject::connect(unSelectAllButton, SIGNAL(clicked(bool)), this, SLOT(unselectAll()));
+                selectionFrame->layout()->addWidget(unSelectAllButton);
+            mainFrame->layout()->addWidget(selectionFrame);
+
             QFrame* listFrame = new QFrame(mainFrame);
             listFrame->setLayout(new QVBoxLayout(listFrame));
             listFrame->layout()->setContentsMargins(0, 0, 0, 0);
@@ -52,7 +64,6 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
                 QObject::connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteItem()));
                 actionsFrame->layout()->addWidget(deleteButton);
             mainFrame->layout()->addWidget(actionsFrame);
-
         container->layout()->addWidget(mainFrame);
         this->layout()->addWidget(container);
 }
@@ -141,4 +152,47 @@ void MyListWidget::onTitleChanged()
 void MyListWidget::onNeedToFindChanged()
 {
     m_state.needToFind = m_needToFindWidget->text().toUInt();
+}
+
+void MyListWidget::selectAll()
+{
+    if(m_listWidget->count() == m_state.listItems.size())
+    {
+        for(int i = 0; i < m_listWidget->count(); i++)
+        {
+            MyListWidgetItem* itemWidget =
+                    qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
+            //disconnect(itemWidget, SIGNAL(save()), this, SLOT(onItemChanged()));
+
+            /*ItemState item;
+            item.title = itemWidget->title();
+            item.count = itemWidget->count();
+            item.selected = itemWidget->checked();*/
+
+            itemWidget->setSelected(true);
+        }
+    }
+
+    //updateWidgets();
+}
+
+void MyListWidget::unselectAll()
+{
+    if(m_listWidget->count() == m_state.listItems.size())
+    {
+        for(int i = 0; i < m_listWidget->count(); i++)
+        {
+            MyListWidgetItem* itemWidget =
+                    qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
+            //disconnect(itemWidget, SIGNAL(save()), this, SLOT(onItemChanged()));
+
+            /*ItemState item;
+            item.title = itemWidget->title();
+            item.count = itemWidget->count();
+            item.selected = itemWidget->checked();*/
+
+            itemWidget->setSelected(false);
+        }
+    }
+    //updateWidgets();
 }

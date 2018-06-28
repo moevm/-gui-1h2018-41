@@ -21,6 +21,8 @@ public:
 
     bool checked() const;
 
+    void setSelected(bool selected);
+
 signals:
     void save();
 

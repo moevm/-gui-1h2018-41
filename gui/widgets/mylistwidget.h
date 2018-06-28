@@ -61,6 +61,9 @@ private slots:
     void onItemChanged();
     void onTitleChanged();
     void onNeedToFindChanged();
+
+    void selectAll();
+    void unselectAll();
 };
 
 #endif // MYLISTWIDGET_H

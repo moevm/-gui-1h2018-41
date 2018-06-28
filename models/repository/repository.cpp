@@ -15,6 +15,8 @@ void Repository::setContent(QList<RandomItemList> lists)
 void Repository::addLists(QList<RandomItemList> lists)
 {
     QList<RandomItemList> uniqueLists;
+    QList<RandomItemList> replaceLists;
+
     for(size_t i = 0; i < (size_t) lists.size(); i++)
     {
         bool isFind = false;
@@ -30,10 +32,23 @@ void Repository::addLists(QList<RandomItemList> lists)
         {
             uniqueLists.push_back(lists[i]);
         }
+        else
+        {
+            replaceLists.push_back(lists[i]);
+        }
     }
 
     for(auto list : uniqueLists)
     {
+        if(!list.title().isEmpty())
+        {
+            m_allLists.push_back(list);
+        }
+    }
+
+    for(auto list : replaceLists)
+    {
+        removeList(list.title());
         m_allLists.push_back(list);
     }
 }
@@ -50,7 +65,7 @@ void Repository::removeList(QString name)
         }
     }
 
-    if(index > 0 && index < m_allLists.size())
+    if(index >= 0 && index < m_allLists.size())
     {
         m_allLists.removeAt(index);
     }
@@ -88,4 +103,11 @@ RandomItemList Repository::findList(QString listName)
         }
     }
     return currentList;
+}
+
+void Repository::save()
+{
+    SaveToFile s(m_filePath);
+    s.setContent(m_allLists);
+    s.start();
 }

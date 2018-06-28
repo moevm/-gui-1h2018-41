@@ -8,6 +8,8 @@
 #include "models/types/randomitemlist.h"
 #include "libs/jsonparser/json.h"
 
+#include "models/actions/savetofile.h"
+
 class Repository : public QObject
 {
     Q_OBJECT
@@ -26,6 +28,8 @@ public:
     void setFilePath(const QString &filePath);
 
     RandomItemList findList(QString listName);
+
+    void save();
 
 signals:
 

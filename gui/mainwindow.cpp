@@ -145,24 +145,31 @@ void MainWindow::on_randomizePushButton_clicked()
         listsStates.push_back(list->getCurrentListState());
     }
 
-    m_repo.setContent(toModelFormat(listsStates));
+    //m_repo.addLists(toModelFormat(listsStates));
 
-    QList<RandomItemList> lists = m_repo.getContent();
+    //QList<RandomItemList> lists = m_repo.getContent();
 
-    /*for(int i = 0; i < lists.size(); i++)
+    QList<RandomItemList> lists = toModelFormat(listsStates);
+
+    qDebug() << "---";
+    for(int i = 0; i < lists.size(); i++)
     {
-        for(int j = 0; j < lists[i].size(); j++)
+        for(size_t j = 0; j < lists[i].size(); j++)
         {
             RandomItem item = lists[i].get(j);
             qDebug() << item.getTitle() << item.getSelected() << item.getCount();
         }
-    }*/
+    }
+    qDebug() << "---";
 
     Randomizer r;
     r.setLists(lists);
     QString results = r.start();
+    qDebug() << results;
+
     ui->plainTextEdit->clear();
     ui->plainTextEdit->setPlainText(results);
+    ui->plainTextEdit->update();
 }
 
 void MainWindow::on_actionClear_triggered()
@@ -182,15 +189,8 @@ void MainWindow::on_actionSave_triggered()
     }
 
     m_repo.addLists(toModelFormat(listsStates));
+    m_repo.save();
 
-    QList<RandomItemList> lists = m_repo.getContent();
-
-    SaveToFile s(m_repo.getFilePath());
-    s.setContent(lists);
-    s.start();
-
-    clear();
-    m_repo.clear();
     openLibrary();
 }
 
@@ -214,10 +214,7 @@ void MainWindow::on_actionRemove_List_triggered()
 
 void MainWindow::removeList(QString listTitle)
 {
-    m_repo.removeList(listTitle);
-    on_actionSave_triggered();
-
-    /*for(auto subWindow : ui->mdiArea->subWindowList())
+    for(auto subWindow : ui->mdiArea->subWindowList())
     {
         MyListWidget* list =
                 qobject_cast<MyListWidget*>(subWindow->widget());
@@ -226,7 +223,12 @@ void MainWindow::removeList(QString listTitle)
         {
             subWindow->deleteLater();
         }
-    }*/
+    }
+
+    m_repo.removeList(listTitle);
+    m_repo.save();
+    clear();
+    openLibrary();
 }
 
 void MainWindow::on_actionMenu_triggered()
@@ -259,6 +261,7 @@ void MainWindow::on_menuListWidget_itemDoubleClicked(QListWidgetItem *item)
     ListState list = toGuiFormat(m_repo.findList(listTitle));
     QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
     MyListWidget* myList = new MyListWidget(list, w);
+
     w->setWidget(myList);
     w->adjustSize();
     w->show();

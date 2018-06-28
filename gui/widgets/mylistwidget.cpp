@@ -50,8 +50,7 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
             listFrame->layout()->setContentsMargins(0, 0, 0, 0);
                 m_listWidget = new QListWidget(container);
                 updateWidgets();
-                //QObject::connect(m_listWidget, SIGNAL(entered(QModelIndex)), this, SLOT(selectItem(QModelIndex)));
-                //QObject::connect(m_listWidget, SIGNAL(activated(QModelIndex)), this, SLOT(selectItem(QModelIndex)));
+                m_listWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
                 QObject::connect(m_listWidget, SIGNAL(itemPressed(QListWidgetItem*)), this, SLOT(selectItem(QListWidgetItem*)));
                 listFrame->layout()->addWidget(m_listWidget);
             mainFrame->layout()->addWidget(listFrame);
@@ -109,18 +108,22 @@ void MyListWidget::addItem()
 
 void MyListWidget::deleteItem()
 {
-    MyListWidgetItem* item = qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->currentItem()));
-
-    if(item != nullptr)
+    QList<QListWidgetItem*> selectedItems = m_listWidget->selectedItems();
+    for(auto item : selectedItems)
     {
-        ItemState content;
-        content.title = item->title();
-        content.count = item->count();
-        content.selected = item->checked();
+        MyListWidgetItem* itemWidget = qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(item));
 
-        m_state.listItems.removeOne(content);
-        updateWidgets();
+        if(itemWidget != nullptr)
+        {
+            ItemState content;
+            content.title = itemWidget->title();
+            content.count = itemWidget->count();
+            content.selected = itemWidget->checked();
+
+            m_state.listItems.removeOne(content);
+        }
     }
+    updateWidgets();
 }
 
 void MyListWidget::onItemChanged()

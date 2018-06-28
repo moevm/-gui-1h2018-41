@@ -49,6 +49,9 @@ private:
     QLineEdit* m_titleWidget;
     QLineEdit* m_needToFindWidget;
     QListWidget* m_listWidget;
+    QPushButton* m_editAndSavePushButton;
+    bool m_edit;
+
     void updateWidgets();
 
 signals:
@@ -61,6 +64,7 @@ private slots:
     void onItemChanged();
     void onTitleChanged();
     void onNeedToFindChanged();
+    void onEditAndSavePressed();
 
     void selectAll();
     void unselectAll();

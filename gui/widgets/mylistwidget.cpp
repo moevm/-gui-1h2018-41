@@ -16,18 +16,25 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
     titleFrame->setLayout(new QHBoxLayout(titleFrame));
     titleFrame->layout()->setContentsMargins(0, 0, 0, 0);
         m_titleWidget = new QLineEdit(m_state.listName, titleFrame);
+        m_titleWidget->setEnabled(false);
         //m_titleWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         m_titleWidget->setStyleSheet("border:1px solid #dfdfdf; border-radius: 5px; padding:5px;");
         m_titleWidget->setPlaceholderText("Введите название списка");
-        QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onTitleChanged()));
+        QObject::connect(m_titleWidget, SIGNAL(returnPressed()), this, SLOT(onEditAndSavePressed()));
         titleFrame->layout()->addWidget(m_titleWidget);
 
         m_needToFindWidget = new QLineEdit(QString::number(1), titleFrame);
         m_needToFindWidget->setMaximumWidth(50);
+        m_needToFindWidget->setEnabled(false);
         m_needToFindWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         m_needToFindWidget->setStyleSheet("background-color:#fff; border:1px solid #dfdfdf; border-radius:5px; padding:5px;");
-        QObject::connect(m_needToFindWidget, SIGNAL(editingFinished()), this, SLOT(onNeedToFindChanged()));
+        QObject::connect(m_needToFindWidget, SIGNAL(returnPressed()), this, SLOT(onEditAndSavePressed()));
         titleFrame->layout()->addWidget(m_needToFindWidget);
+
+        m_editAndSavePushButton = new QPushButton("Edit", titleFrame);
+        QObject::connect(m_editAndSavePushButton, SIGNAL(clicked(bool)), this, SLOT(onEditAndSavePressed()));
+        titleFrame->layout()->addWidget(m_editAndSavePushButton);
+
     container->layout()->addWidget(titleFrame);
         QFrame* mainFrame = new QFrame(container);
         mainFrame->setLayout(new QVBoxLayout(mainFrame));
@@ -37,7 +44,7 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
             selectionFrame->setLayout(new QHBoxLayout(selectionFrame));
             selectionFrame->layout()->setContentsMargins(0, 0, 0, 0);
             selectionFrame->layout()->setAlignment(Qt::AlignTop);
-                QPushButton* selectAllButton = new QPushButton("Выделить все", selectionFrame);
+                QPushButton* selectAllButton = new QPushButton("Выбрать все", selectionFrame);
                 QObject::connect(selectAllButton, SIGNAL(clicked(bool)), this, SLOT(selectAll()));
                 selectionFrame->layout()->addWidget(selectAllButton);
                 QPushButton* unSelectAllButton = new QPushButton("Снять все", selectionFrame);
@@ -100,7 +107,7 @@ void MyListWidget::addItem()
     ItemState emptyItem;
     emptyItem.title = "";
     emptyItem.count = 1;
-    emptyItem.selected = false;
+    emptyItem.selected = true;
     m_state.listItems.push_back(emptyItem);
     updateWidgets();
     m_listWidget->setCurrentRow(m_listWidget->count() - 1);
@@ -160,6 +167,27 @@ void MyListWidget::onNeedToFindChanged()
     m_state.needToFind = m_needToFindWidget->text().toUInt();
 }
 
+void MyListWidget::onEditAndSavePressed()
+{
+    if(m_edit)
+    {
+        m_titleWidget->setEnabled(false);
+        m_needToFindWidget->setEnabled(false);
+        m_editAndSavePushButton->setText("Edit");
+
+        m_state.needToFind = m_needToFindWidget->text().toUInt();
+        m_state.listName = m_titleWidget->text();
+    }
+    else
+    {
+        m_titleWidget->setEnabled(true);
+        m_needToFindWidget->setEnabled(true);
+        m_editAndSavePushButton->setText("Save");
+
+    }
+    m_edit = !m_edit;
+}
+
 void MyListWidget::selectAll()
 {
     if(m_listWidget->count() == m_state.listItems.size())
@@ -188,7 +216,6 @@ void MyListWidget::unselectAll()
 
 void MyListWidget::selectItem(QModelIndex index)
 {
-    qDebug() << "select";
     int row = index.row();
     MyListWidgetItem* itemWidget =
             qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(row)));

@@ -33,7 +33,7 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     m_titleWidget->setEnabled(false);
     m_titleWidget->setStyleSheet("background-color:#fff; border:1px solid #dfdfdf; border-radius:5px; padding:5px;");
     m_titleWidget->setPlaceholderText("Элемент для рандомизации");
-    //QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
+    QObject::connect(m_titleWidget, SIGNAL(returnPressed()), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_titleWidget);
 
     m_countWidget = new QLineEdit(QString::number(m_count), container);
@@ -41,7 +41,7 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     m_countWidget->setMaximumWidth(50);
     m_countWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     m_countWidget->setStyleSheet("background-color:#fff; border:1px solid #dfdfdf; border-radius:5px; padding:5px;");
-    //QObject::connect(m_countWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
+    QObject::connect(m_countWidget, SIGNAL(returnPressed()), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_countWidget);
 
     m_editAndSavePushButton = new QPushButton("edit", container);

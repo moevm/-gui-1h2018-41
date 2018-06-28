@@ -100,7 +100,7 @@ void MyListWidget::addItem()
     ItemState emptyItem;
     emptyItem.title = "";
     emptyItem.count = 1;
-    emptyItem.selected = true;
+    emptyItem.selected = false;
     m_state.listItems.push_back(emptyItem);
     updateWidgets();
     m_listWidget->setCurrentRow(m_listWidget->count() - 1);

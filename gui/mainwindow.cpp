@@ -190,7 +190,7 @@ void MainWindow::on_actionSave_triggered()
 void MainWindow::on_actionAdd_List_triggered()
 {
     ListState list;
-    QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
+    MyMdiSubWindow* w = new MyMdiSubWindow(ui->mdiArea);
     MyListWidget* myList = new MyListWidget(list, w);
     w->setWidget(myList);
     w->adjustSize();

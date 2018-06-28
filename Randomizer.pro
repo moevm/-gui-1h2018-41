@@ -35,7 +35,8 @@ SOURCES += \
     models/actions/randomizer.cpp \
     models/actions/savetofile.cpp \
     models/actions/openfile.cpp \
-    gui/selectlistdialog.cpp
+    gui/selectlistdialog.cpp \
+    gui/widgets/mymdisubwindow.cpp
 
 HEADERS += \
         gui/mainwindow.h \
@@ -49,7 +50,8 @@ HEADERS += \
     models/structs.h \
     models/actions/savetofile.h \
     models/actions/openfile.h \
-    gui/selectlistdialog.h
+    gui/selectlistdialog.h \
+    gui/widgets/mymdisubwindow.h
 
 FORMS += \
         gui/mainwindow.ui \

@@ -6,7 +6,9 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-#include "widgets/mylistwidget.h"
+#include "gui/widgets/mylistwidget.h"
+#include "gui/widgets/mymdisubwindow.h"
+
 #include "models/repository/repository.h"
 #include "models/actions/randomizer.h"
 #include "models/actions/savetofile.h"

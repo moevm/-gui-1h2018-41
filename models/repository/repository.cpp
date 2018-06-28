@@ -1,8 +1,7 @@
 #include "repository.h"
 
 Repository::Repository(QObject *parent) :
-    QObject(parent),
-    m_filePath(QStandardPaths::locate(QStandardPaths::DocumentsLocation, QString("lists.json")))
+    QObject(parent)
 {
 
 }
@@ -39,16 +38,6 @@ void Repository::clear()
     m_allLists.clear();
 }
 
-QString Repository::getFilePath() const
-{
-    return m_filePath;
-}
-
-void Repository::setFilePath(const QString &filePath)
-{
-    m_filePath = filePath;
-}
-
 RandomItemList Repository::findList(QString listName)
 {
     RandomItemList currentList;
@@ -78,4 +67,14 @@ QList<RandomItemList> Repository::contentToList()
         content.push_back(list);
     }
     return content;
+}
+
+QString Repository::getFilePath() const
+{
+    return m_filePath;
+}
+
+void Repository::setFilePath(const QString &filePath)
+{
+    m_filePath = filePath;
 }

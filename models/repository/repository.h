@@ -24,22 +24,23 @@ public:
 
     void clear();
 
-    QString getFilePath() const;
-    void setFilePath(const QString &filePath);
-
     RandomItemList findList(QString listName);
 
     void save();
+
+    QString getFilePath() const;
+    void setFilePath(const QString &filePath);
 
 signals:
 
 public slots:
 
 protected:
-    QString m_filePath;
     QMap<QString, RandomItemList> m_allLists;
 
     QList<RandomItemList> contentToList();
+
+    QString m_filePath = "";
 };
 
 #endif // REPOSITORY_H

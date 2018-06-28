@@ -1,7 +1,7 @@
 #include "openfile.h"
 
-OpenFile::OpenFile(QString path) :
-    m_path(path)
+OpenFile::OpenFile() :
+    m_path(QString("RandomLibrary.json"))
 {
 
 }
@@ -18,6 +18,7 @@ QList<RandomItemList> OpenFile::start()
 
     //qDebug() << m_path;
 
+    //QStandardPaths::locate(QStandardPaths::DocumentsLocation, QString("lists.json");
     QFile file(m_path);
     if (file.open(QIODevice::ReadWrite))
     {

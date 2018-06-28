@@ -126,7 +126,10 @@ void MyListWidget::onItemChanged()
 
             m_state.listItems[i] = item;
         }
+
+        QModelIndex index = m_listWidget->currentIndex();
         updateWidgets();
+        m_listWidget->setCurrentIndex(index);
     }
 }
 

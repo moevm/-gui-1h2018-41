@@ -29,9 +29,9 @@ void MainWindow::initWidgets()
 
 void MainWindow::openLibrary()
 {
-    QString libraryPath = m_repo.getFilePath();
-    OpenFile open(libraryPath);
+    OpenFile open;
     m_repo.setContent(open.start());
+    m_repo.setFilePath(open.path());
 
     QList<ListState> lists = toGuiFormat(m_repo.getContent());
 
@@ -120,7 +120,7 @@ void MainWindow::on_actionOpen_triggered()
 {
     clear();
 
-    OpenFile open("");
+    OpenFile open;
     m_repo.setContent(open.start());
     m_repo.setFilePath(open.path());
 
@@ -161,7 +161,6 @@ void MainWindow::on_randomizePushButton_clicked()
     Randomizer r;
     r.setLists(lists);
     QString results = r.start();
-    qDebug() << results;
 
     ui->plainTextEdit->clear();
     ui->plainTextEdit->setPlainText(results);

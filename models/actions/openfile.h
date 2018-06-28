@@ -4,6 +4,7 @@
 #include <QString>
 #include <QFile>
 #include <QFileDialog>
+#include <QStandardPaths>
 #include <QDebug>
 
 #include "libs/jsonparser/json.h"
@@ -13,7 +14,7 @@
 class OpenFile
 {
 public:
-    OpenFile(QString path = "");
+    OpenFile();
 
     QList<RandomItemList> start();
     static QList<RandomItemList> parse(QString data);

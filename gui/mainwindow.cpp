@@ -29,7 +29,6 @@ void MainWindow::initWidgets()
 
 void MainWindow::openLibrary()
 {
-    clear();
     QString libraryPath = m_repo.getFilePath();
     OpenFile open(libraryPath);
     m_repo.setContent(open.start());
@@ -42,6 +41,7 @@ void MainWindow::openLibrary()
         titles.push_back(list.listName);
     }
 
+    ui->menuListWidget->clear();
     ui->menuListWidget->addItems(titles);
 }
 
@@ -145,13 +145,9 @@ void MainWindow::on_randomizePushButton_clicked()
         listsStates.push_back(list->getCurrentListState());
     }
 
-    //m_repo.addLists(toModelFormat(listsStates));
-
-    //QList<RandomItemList> lists = m_repo.getContent();
-
     QList<RandomItemList> lists = toModelFormat(listsStates);
 
-    qDebug() << "---";
+    /*qDebug() << "---";
     for(int i = 0; i < lists.size(); i++)
     {
         for(size_t j = 0; j < lists[i].size(); j++)
@@ -160,7 +156,7 @@ void MainWindow::on_randomizePushButton_clicked()
             qDebug() << item.getTitle() << item.getSelected() << item.getCount();
         }
     }
-    qDebug() << "---";
+    qDebug() << "---";*/
 
     Randomizer r;
     r.setLists(lists);
@@ -169,13 +165,11 @@ void MainWindow::on_randomizePushButton_clicked()
 
     ui->plainTextEdit->clear();
     ui->plainTextEdit->setPlainText(results);
-    ui->plainTextEdit->update();
 }
 
 void MainWindow::on_actionClear_triggered()
 {
     clear();
-    m_repo.clear();
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -227,7 +221,6 @@ void MainWindow::removeList(QString listTitle)
 
     m_repo.removeList(listTitle);
     m_repo.save();
-    clear();
     openLibrary();
 }
 

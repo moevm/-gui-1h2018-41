@@ -121,7 +121,7 @@ void MainWindow::on_actionOpen_triggered()
     clear();
 
     OpenFile open("");
-    m_repo.addLists(open.start());
+    m_repo.setContent(open.start());
     m_repo.setFilePath(open.path());
 
     QList<ListState> lists = toGuiFormat(m_repo.getContent());

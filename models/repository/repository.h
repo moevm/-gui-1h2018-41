@@ -37,7 +37,9 @@ public slots:
 
 protected:
     QString m_filePath;
-    QList<RandomItemList> m_allLists;
+    QMap<QString, RandomItemList> m_allLists;
+
+    QList<RandomItemList> contentToList();
 };
 
 #endif // REPOSITORY_H

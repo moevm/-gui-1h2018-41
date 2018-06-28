@@ -58,7 +58,7 @@ QList<RandomItemList> OpenFile::parse(QString data)
             int count = item["count"].toUInt();
             listTmp.add(RandomItem(title, selected, count));
         }
-        resultLists.append(listTmp);
+        resultLists.push_back(listTmp);
     }
     return resultLists;
 }

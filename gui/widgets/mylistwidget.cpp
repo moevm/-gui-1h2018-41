@@ -97,13 +97,16 @@ void MyListWidget::deleteItem()
 {
     MyListWidgetItem* item = qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->currentItem()));
 
-    ItemState content;
-    content.title = item->title();
-    content.count = item->count();
-    content.selected = item->checked();
+    if(item != nullptr)
+    {
+        ItemState content;
+        content.title = item->title();
+        content.count = item->count();
+        content.selected = item->checked();
 
-    m_state.listItems.removeOne(content);
-    updateWidgets();
+        m_state.listItems.removeOne(content);
+        updateWidgets();
+    }
 }
 
 void MyListWidget::onItemChanged()

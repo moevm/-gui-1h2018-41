@@ -50,6 +50,9 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
             listFrame->layout()->setContentsMargins(0, 0, 0, 0);
                 m_listWidget = new QListWidget(container);
                 updateWidgets();
+                //QObject::connect(m_listWidget, SIGNAL(entered(QModelIndex)), this, SLOT(selectItem(QModelIndex)));
+                //QObject::connect(m_listWidget, SIGNAL(activated(QModelIndex)), this, SLOT(selectItem(QModelIndex)));
+                QObject::connect(m_listWidget, SIGNAL(itemPressed(QListWidgetItem*)), this, SLOT(selectItem(QListWidgetItem*)));
                 listFrame->layout()->addWidget(m_listWidget);
             mainFrame->layout()->addWidget(listFrame);
 
@@ -86,7 +89,7 @@ void MyListWidget::updateWidgets()
                                                         item.count,
                                                         item.selected,
                                                         m_listWidget);
-        connect(widget, SIGNAL(save()), this, SLOT(onItemChanged()));
+        QObject::connect(widget, SIGNAL(save()), this, SLOT(onItemChanged()));
         listItem->setSizeHint(widget->minimumSizeHint());
         m_listWidget->addItem(listItem);
         m_listWidget->setItemWidget(listItem, widget);
@@ -128,7 +131,7 @@ void MyListWidget::onItemChanged()
         {
             MyListWidgetItem* itemWidget =
                     qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
-            disconnect(itemWidget, SIGNAL(save()), this, SLOT(onItemChanged()));
+            QObject::disconnect(itemWidget, SIGNAL(save()), this, SLOT(onItemChanged()));
 
             ItemState item;
             item.title = itemWidget->title();
@@ -162,18 +165,9 @@ void MyListWidget::selectAll()
         {
             MyListWidgetItem* itemWidget =
                     qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
-            //disconnect(itemWidget, SIGNAL(save()), this, SLOT(onItemChanged()));
-
-            /*ItemState item;
-            item.title = itemWidget->title();
-            item.count = itemWidget->count();
-            item.selected = itemWidget->checked();*/
-
             itemWidget->setSelected(true);
         }
     }
-
-    //updateWidgets();
 }
 
 void MyListWidget::unselectAll()
@@ -184,15 +178,23 @@ void MyListWidget::unselectAll()
         {
             MyListWidgetItem* itemWidget =
                     qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
-            //disconnect(itemWidget, SIGNAL(save()), this, SLOT(onItemChanged()));
-
-            /*ItemState item;
-            item.title = itemWidget->title();
-            item.count = itemWidget->count();
-            item.selected = itemWidget->checked();*/
-
             itemWidget->setSelected(false);
         }
     }
-    //updateWidgets();
+}
+
+void MyListWidget::selectItem(QModelIndex index)
+{
+    qDebug() << "select";
+    int row = index.row();
+    MyListWidgetItem* itemWidget =
+            qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(row)));
+    itemWidget->setSelected(!itemWidget->selected());
+}
+
+void MyListWidget::selectItem(QListWidgetItem *item)
+{
+    MyListWidgetItem* itemWidget =
+            qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(item));
+    itemWidget->setSelected(!itemWidget->selected());
 }

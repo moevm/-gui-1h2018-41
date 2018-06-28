@@ -64,6 +64,9 @@ private slots:
 
     void selectAll();
     void unselectAll();
+
+    void selectItem(QModelIndex index);
+    void selectItem(QListWidgetItem* item);
 };
 
 #endif // MYLISTWIDGET_H

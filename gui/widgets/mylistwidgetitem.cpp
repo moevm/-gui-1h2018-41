@@ -4,7 +4,8 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     QWidget(parent),
     m_title(item),
     m_count(count),
-    m_selected(checked)
+    m_selected(checked),
+    m_edit(false)
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     this->setLayout(mainLayout);
@@ -29,17 +30,24 @@ MyListWidgetItem::MyListWidgetItem(QString item, size_t count, bool checked, QWi
     container->layout()->addWidget(m_selectedCheckBox);
 
     m_titleWidget = new QLineEdit(m_title, container);
+    m_titleWidget->setEnabled(false);
     m_titleWidget->setStyleSheet("background-color:#fff; border:1px solid #dfdfdf; border-radius:5px; padding:5px;");
     m_titleWidget->setPlaceholderText("Элемент для рандомизации");
-    QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
+    //QObject::connect(m_titleWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_titleWidget);
 
     m_countWidget = new QLineEdit(QString::number(m_count), container);
+    m_countWidget->setEnabled(false);
     m_countWidget->setMaximumWidth(50);
     m_countWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     m_countWidget->setStyleSheet("background-color:#fff; border:1px solid #dfdfdf; border-radius:5px; padding:5px;");
-    QObject::connect(m_countWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
+    //QObject::connect(m_countWidget, SIGNAL(editingFinished()), this, SLOT(onItemUpdated()));
     container->layout()->addWidget(m_countWidget);
+
+    m_editAndSavePushButton = new QPushButton("edit", container);
+    QObject::connect(m_editAndSavePushButton, SIGNAL(clicked(bool)), this, SLOT(onEditAndSavePressed()));
+    container->layout()->addWidget(m_editAndSavePushButton);
+
 
     this->layout()->addWidget(container);
 }
@@ -55,6 +63,29 @@ void MyListWidgetItem::onItemUpdated()
     m_count = m_countWidget->text().toUInt();
     m_selected = m_selectedCheckBox->isChecked();
     emit save();
+}
+
+void MyListWidgetItem::onEditAndSavePressed()
+{
+    if(m_edit)
+    {
+        onItemUpdated();
+        m_titleWidget->setEnabled(false);
+        m_countWidget->setEnabled(false);
+        m_editAndSavePushButton->setText("Edit");
+    }
+    else
+    {
+        m_titleWidget->setEnabled(true);
+        m_countWidget->setEnabled(true);
+        m_editAndSavePushButton->setText("Save");
+    }
+    m_edit = !m_edit;
+}
+
+bool MyListWidgetItem::selected() const
+{
+    return m_selected;
 }
 
 void MyListWidgetItem::setSelected(bool selected)

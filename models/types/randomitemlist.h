@@ -8,7 +8,7 @@
 class RandomItemList
 {
 public:
-    explicit RandomItemList(QString title);
+    explicit RandomItemList(QString title = "");
 
     QString title() const;
     void setTitle(const QString &title);

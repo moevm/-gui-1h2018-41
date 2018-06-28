@@ -27,6 +27,7 @@ public:
     ~MainWindow();
 
     static QList<ListState> toGuiFormat(QList<RandomItemList> lists);
+    static ListState toGuiFormat(RandomItemList list);
     static QList<RandomItemList> toModelFormat(QList<ListState> listsStates);
 
 private slots:
@@ -45,12 +46,18 @@ private slots:
 
     void removeList(QString listTitle);
 
+    void on_actionMenu_triggered();
+
+    void on_menuListWidget_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
 
     Repository m_repo;
 
     void initWidgets();
+    void openLibrary();
+
     void clear();
 };
 

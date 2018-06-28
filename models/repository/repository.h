@@ -2,7 +2,7 @@
 #define REPOSITORY_H
 
 #include <QObject>
-#include <QSet>
+#include <QStandardPaths>
 #include <QDebug>
 
 #include "models/types/randomitemlist.h"
@@ -15,19 +15,25 @@ public:
     explicit Repository (QObject *parent = nullptr);
 
     void setContent(QList<RandomItemList> lists);
+    void addLists(QList<RandomItemList> lists);
+    void removeList(QString name);
+
     QList<RandomItemList> getContent();
+
     void clear();
 
     QString getFilePath() const;
     void setFilePath(const QString &filePath);
+
+    RandomItemList findList(QString listName);
 
 signals:
 
 public slots:
 
 protected:
-    QList<RandomItemList> m_lists;
-    QString m_filePath = "";
+    QString m_filePath;
+    QList<RandomItemList> m_allLists;
 };
 
 #endif // REPOSITORY_H

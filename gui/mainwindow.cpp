@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->showMaximized();
     initWidgets();
+    openLibrary();
 }
 
 MainWindow::~MainWindow()
@@ -18,11 +19,30 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets()
 {
     auto toolbar = ui->mainToolBar;
-    toolbar->addAction(ui->actionOpen);
+    toolbar->addAction(ui->actionMenu);
+    //toolbar->addAction(ui->actionOpen);
     toolbar->addAction(ui->actionSave);
     toolbar->addAction(ui->actionAdd_List);
     toolbar->addAction(ui->actionRemove_List);
-    toolbar->addAction(ui->actionClear);
+    //toolbar->addAction(ui->actionClear);
+}
+
+void MainWindow::openLibrary()
+{
+    clear();
+    QString libraryPath = m_repo.getFilePath();
+    OpenFile open(libraryPath);
+    m_repo.setContent(open.start());
+
+    QList<ListState> lists = toGuiFormat(m_repo.getContent());
+
+    QStringList titles;
+    for(auto list : lists)
+    {
+        titles.push_back(list.listName);
+    }
+
+    ui->menuListWidget->addItems(titles);
 }
 
 void MainWindow::clear()
@@ -32,6 +52,7 @@ void MainWindow::clear()
         subWindow->deleteLater();
     }
     m_repo.clear();
+    ui->menuListWidget->clear();
 }
 
 QList<ListState> MainWindow::toGuiFormat(QList<RandomItemList> lists)
@@ -55,6 +76,24 @@ QList<ListState> MainWindow::toGuiFormat(QList<RandomItemList> lists)
         listWidgetsStates.push_back(listWidgetState);
     }
     return listWidgetsStates;
+}
+
+ListState MainWindow::toGuiFormat(RandomItemList list)
+{
+    ListState listWidgetState;
+    for(size_t j = 0; j < list.size(); j++)
+    {
+        RandomItem item = list.get(j);
+        ItemState itemWidget;
+        itemWidget.title = item.getTitle();
+        itemWidget.count = item.getCount();
+        itemWidget.selected = item.getSelected();
+
+        listWidgetState.listName = list.title();
+        listWidgetState.needToFind = list.getNeedToFind();
+        listWidgetState.listItems.push_back(itemWidget);
+    }
+    return listWidgetState;
 }
 
 QList<RandomItemList> MainWindow::toModelFormat(QList<ListState> listsStates)
@@ -82,7 +121,7 @@ void MainWindow::on_actionOpen_triggered()
     clear();
 
     OpenFile open("");
-    m_repo.setContent(open.start());
+    m_repo.addLists(open.start());
     m_repo.setFilePath(open.path());
 
     QList<ListState> lists = toGuiFormat(m_repo.getContent());
@@ -142,13 +181,17 @@ void MainWindow::on_actionSave_triggered()
         listsStates.push_back(list->getCurrentListState());
     }
 
-    m_repo.setContent(toModelFormat(listsStates));
+    m_repo.addLists(toModelFormat(listsStates));
 
     QList<RandomItemList> lists = m_repo.getContent();
 
     SaveToFile s(m_repo.getFilePath());
     s.setContent(lists);
     s.start();
+
+    clear();
+    m_repo.clear();
+    openLibrary();
 }
 
 void MainWindow::on_actionAdd_List_triggered()
@@ -171,6 +214,37 @@ void MainWindow::on_actionRemove_List_triggered()
 
 void MainWindow::removeList(QString listTitle)
 {
+    m_repo.removeList(listTitle);
+    on_actionSave_triggered();
+
+    /*for(auto subWindow : ui->mdiArea->subWindowList())
+    {
+        MyListWidget* list =
+                qobject_cast<MyListWidget*>(subWindow->widget());
+        ListState state = list->getCurrentListState();
+        if(state.listName == listTitle)
+        {
+            subWindow->deleteLater();
+        }
+    }*/
+}
+
+void MainWindow::on_actionMenu_triggered()
+{
+    if(ui->menuDockWidget->isVisible())
+    {
+        ui->menuDockWidget->hide();
+    }
+    else
+    {
+        ui->menuDockWidget->show();
+    }
+}
+
+void MainWindow::on_menuListWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+    QString listTitle = item->text();
+
     for(auto subWindow : ui->mdiArea->subWindowList())
     {
         MyListWidget* list =
@@ -181,4 +255,11 @@ void MainWindow::removeList(QString listTitle)
             subWindow->deleteLater();
         }
     }
+
+    ListState list = toGuiFormat(m_repo.findList(listTitle));
+    QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
+    MyListWidget* myList = new MyListWidget(list, w);
+    w->setWidget(myList);
+    w->adjustSize();
+    w->show();
 }

@@ -4,6 +4,7 @@
 #include <QString>
 #include <QFile>
 #include <QFileDialog>
+#include <QDebug>
 
 #include "libs/jsonparser/json.h"
 

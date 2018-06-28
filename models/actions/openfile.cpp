@@ -10,14 +10,16 @@ QList<RandomItemList> OpenFile::start()
 {
     QList<RandomItemList> content;
 
-    QFile test(m_path);
+    /*QFile test(m_path);
     if(!test.exists())
     {
         m_path = QFileDialog::getOpenFileName(0, "Open File", "", "*.json");
-    }
+    }*/
+
+    //qDebug() << m_path;
 
     QFile file(m_path);
-    if ((file.exists()) && (file.open(QIODevice::ReadOnly)))
+    if (file.open(QIODevice::ReadWrite))
     {
         QString data = file.readAll();
         file.close();

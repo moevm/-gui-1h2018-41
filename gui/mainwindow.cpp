@@ -116,25 +116,6 @@ QList<RandomItemList> MainWindow::toModelFormat(QList<ListState> listsStates)
     return lists;
 }
 
-void MainWindow::on_actionOpen_triggered()
-{
-    clear();
-
-    OpenFile open;
-    m_repo.setContent(open.start());
-    m_repo.setFilePath(open.path());
-
-    QList<ListState> lists = toGuiFormat(m_repo.getContent());
-    for(auto list : lists)
-    {
-        QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
-        MyListWidget* myList = new MyListWidget(list, w);
-        w->setWidget(myList);
-        w->adjustSize();
-        w->show();
-    }
-}
-
 void MainWindow::on_randomizePushButton_clicked()
 {
     QList<ListState> listsStates;
@@ -191,6 +172,10 @@ void MainWindow::on_actionAdd_List_triggered()
 {
     ListState list;
     MyMdiSubWindow* w = new MyMdiSubWindow(ui->mdiArea);
+    QString objectName = QStringLiteral("MyMdiSubWindow") + QString::number(ui->mdiArea->subWindowList().size());
+    w->setObjectName(objectName);
+    QObject::connect(w, SIGNAL(closed(QString)), this, SLOT(onMyMDISubWindowClosed(QString)));
+
     MyListWidget* myList = new MyListWidget(list, w);
     w->setWidget(myList);
     w->adjustSize();
@@ -251,10 +236,26 @@ void MainWindow::on_menuListWidget_itemDoubleClicked(QListWidgetItem *item)
     }
 
     ListState list = toGuiFormat(m_repo.findList(listTitle));
-    QMdiSubWindow* w = new QMdiSubWindow(ui->mdiArea);
+    MyMdiSubWindow* w = new MyMdiSubWindow(ui->mdiArea);
+    QString objectName = QStringLiteral("MyMdiSubWindow") + QString::number(ui->mdiArea->subWindowList().size());
+    w->setObjectName(objectName);
+    QObject::connect(w, SIGNAL(closed(QString)), this, SLOT(onMyMDISubWindowClosed(QString)));
+
     MyListWidget* myList = new MyListWidget(list, w);
 
     w->setWidget(myList);
     w->adjustSize();
     w->show();
+}
+
+void MainWindow::onMyMDISubWindowClosed(QString objectName)
+{
+    QList<QMdiSubWindow*> allWindows = ui->mdiArea->subWindowList();
+    for(auto w : allWindows)
+    {
+        if(w->objectName() == objectName)
+        {
+            w->deleteLater();
+        }
+    }
 }

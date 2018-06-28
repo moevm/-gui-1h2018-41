@@ -33,9 +33,6 @@ public:
     static QList<RandomItemList> toModelFormat(QList<ListState> listsStates);
 
 private slots:
-
-    void on_actionOpen_triggered();
-
     void on_randomizePushButton_clicked();
 
     void on_actionClear_triggered();
@@ -51,6 +48,8 @@ private slots:
     void on_actionMenu_triggered();
 
     void on_menuListWidget_itemDoubleClicked(QListWidgetItem *item);
+
+    void onMyMDISubWindowClosed(QString objectName);
 
 private:
     Ui::MainWindow *ui;

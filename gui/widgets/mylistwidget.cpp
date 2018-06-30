@@ -189,7 +189,7 @@ void MyListWidget::onNeedToFindChanged()
 
 void MyListWidget::onTagsEditingFinished()
 {
-    m_state.tags = m_tagsWidget->text().split("+");
+    m_state.tags = m_tagsWidget->text().split("+", QString::SkipEmptyParts);
 }
 
 void MyListWidget::onEditAndSavePressed()
@@ -203,7 +203,7 @@ void MyListWidget::onEditAndSavePressed()
 
         m_state.needToFind = m_needToFindWidget->text().toUInt();
         m_state.listName = m_titleWidget->text();
-        m_state.tags = m_tagsWidget->text().split("+");
+        m_state.tags = m_tagsWidget->text().split("+", QString::SkipEmptyParts);
     }
     else
     {

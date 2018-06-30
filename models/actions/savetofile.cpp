@@ -46,8 +46,9 @@ QByteArray SaveToFile::contentToByteArray()
         QtJson::JsonObject listObject;
         QtJson::JsonObject listContentObject;
         listContentObject["find"] = QVariant::fromValue(list.getNeedToFind());
-        QtJson::JsonArray items;
 
+
+        QtJson::JsonArray items;
         for(size_t i = 0; i < list.size(); i++)
         {
             QtJson::JsonObject item;
@@ -59,6 +60,15 @@ QByteArray SaveToFile::contentToByteArray()
             items.append(item);
         }
         listContentObject["items"] =items;
+
+        QtJson::JsonArray tags;
+        QStringList tagsList = list.getTags();
+        for(auto tag : tagsList)
+        {
+            tags.push_back(tag);
+        }
+        listContentObject["tags"] = tags;
+
         listObject[list.title()] = listContentObject;
         lists.append(listObject);
     }

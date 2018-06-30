@@ -48,9 +48,11 @@ QList<RandomItemList> OpenFile::parse(QString data)
         size_t needToFind = listParams["find"].toUInt();
 
         QtJson::JsonArray items = listParams["items"].toList();
+        QtJson::JsonArray tags = listParams["tags"].toList();
 
         RandomItemList listTmp(listTitle);
         listTmp.setNeedToFind(needToFind);
+
         for(int j = 0; j < items.size(); j++)
         {
             QtJson::JsonObject item = items[j].toMap();
@@ -59,6 +61,14 @@ QList<RandomItemList> OpenFile::parse(QString data)
             int count = item["count"].toUInt();
             listTmp.add(RandomItem(title, selected, count));
         }
+
+        QStringList tagsList;
+        for(auto tag : tags)
+        {
+            tagsList.push_back(tag.toString());
+        }
+        listTmp.setTags(tagsList);
+
         resultLists.push_back(listTmp);
     }
     return resultLists;

@@ -61,6 +61,10 @@ QList<ListState> MainWindow::toGuiFormat(QList<RandomItemList> lists)
     for(int i = 0; i < lists.size(); i++)
     {
         ListState listWidgetState;
+        listWidgetState.listName = lists[i].title();
+        listWidgetState.needToFind = lists[i].getNeedToFind();
+        listWidgetState.tags = lists[i].getTags();
+
         for(size_t j = 0; j < lists[i].size(); j++)
         {
             RandomItem item = lists[i].get(j);
@@ -68,9 +72,6 @@ QList<ListState> MainWindow::toGuiFormat(QList<RandomItemList> lists)
             itemWidget.title = item.getTitle();
             itemWidget.count = item.getCount();
             itemWidget.selected = item.getSelected();
-
-            listWidgetState.listName = lists[i].title();
-            listWidgetState.needToFind = lists[i].getNeedToFind();
             listWidgetState.listItems.push_back(itemWidget);
         }
         listWidgetsStates.push_back(listWidgetState);
@@ -81,6 +82,9 @@ QList<ListState> MainWindow::toGuiFormat(QList<RandomItemList> lists)
 ListState MainWindow::toGuiFormat(RandomItemList list)
 {
     ListState listWidgetState;
+    listWidgetState.listName = list.title();
+    listWidgetState.needToFind = list.getNeedToFind();
+    listWidgetState.tags = list.getTags();
     for(size_t j = 0; j < list.size(); j++)
     {
         RandomItem item = list.get(j);
@@ -89,8 +93,6 @@ ListState MainWindow::toGuiFormat(RandomItemList list)
         itemWidget.count = item.getCount();
         itemWidget.selected = item.getSelected();
 
-        listWidgetState.listName = list.title();
-        listWidgetState.needToFind = list.getNeedToFind();
         listWidgetState.listItems.push_back(itemWidget);
     }
     return listWidgetState;
@@ -103,6 +105,7 @@ QList<RandomItemList> MainWindow::toModelFormat(QList<ListState> listsStates)
     {
         RandomItemList list(listState.listName);
         list.setNeedToFind(listState.needToFind);
+        list.setTags(listState.tags);
         for(auto itemState : listState.listItems)
         {
             RandomItem item;

@@ -262,3 +262,32 @@ void MainWindow::onMyMdiSubWindowClosed(QString objectName)
         }
     }
 }
+
+void MainWindow::on_findByTagLineEdit_textChanged(const QString &arg1)
+{
+    QStringList tags = arg1.split("+", QString::SkipEmptyParts);
+
+    ui->menuListWidget->clear();
+    QList<ListState> lists = toGuiFormat(m_repo.getContent());
+
+    QStringList titles;
+    for(auto list : lists)
+    {
+        bool suitable = true;
+        for(auto tag : tags)
+        {
+            QStringList listTags = list.tags;
+            if(!listTags.contains(tag))
+            {
+                suitable = false;
+            }
+        }
+        if(suitable)
+        {
+            titles.push_back(list.listName);
+        }
+    }
+
+    ui->menuListWidget->clear();
+    ui->menuListWidget->addItems(titles);
+}

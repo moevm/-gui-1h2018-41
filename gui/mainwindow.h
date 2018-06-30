@@ -51,6 +51,8 @@ private slots:
 
     void onMyMdiSubWindowClosed(QString objectName);
 
+    void on_findByTagLineEdit_textChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
 

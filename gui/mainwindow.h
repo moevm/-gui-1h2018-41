@@ -34,6 +34,7 @@ public:
     static ListState toGuiFormat(RandomItemList list);
     static QList<RandomItemList> toModelFormat(QList<ListState> listsStates);
     static QString generateRandomLabelText();
+    static QString generateHelloMessage();
 
 private slots:
     void on_randomizePushButton_clicked();

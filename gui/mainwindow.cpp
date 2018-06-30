@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -29,6 +27,8 @@ void MainWindow::initWidgets()
     //toolbar->addAction(ui->actionClear);
 
     ui->randomizePushButton->setText(generateRandomLabelText());
+
+    QMessageBox(QMessageBox::Information, "", generateHelloMessage()).exec();
 }
 
 void MainWindow::openLibrary()
@@ -134,6 +134,28 @@ QString MainWindow::generateRandomLabelText()
         "Решайся!",
         "Еще разок, чтобы наверняка",
         "Быть или не быть?"
+    };
+
+    int maxIndex = list.size() - 1;
+    int minIndex = 0;
+
+    std::uniform_int_distribution<int> randomIndex(minIndex, maxIndex);
+
+    int index = randomIndex(rng);
+    return list[index];
+}
+
+QString MainWindow::generateHelloMessage()
+{
+    QStringList list =
+    {
+        "Доброе утро, Ваше нерешительное великолепие!",
+        "Чудесный день! А Вы еще чудесней!",
+        "Добрый вечер! Сегодня больше не нужно ничего решать: я сделаю все за Вас!",
+        "Здравствуйте! Вы великолепны!",
+        "Прекрасный выбор! Добрый день!",
+        "Доброе утро! Сегодня Вы точно не ошибетесь",
+        "Доброго времени суток! Сегодня вам точно повезет :3"
     };
 
     int maxIndex = list.size() - 1;

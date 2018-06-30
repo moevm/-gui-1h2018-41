@@ -49,16 +49,6 @@ void MainWindow::openLibrary()
     ui->menuListWidget->addItems(titles);
 }
 
-void MainWindow::clear()
-{
-    for(auto subWindow : ui->mdiArea->subWindowList())
-    {
-        subWindow->deleteLater();
-    }
-    m_repo.clear();
-    ui->menuListWidget->clear();
-}
-
 QList<ListState> MainWindow::toGuiFormat(QList<RandomItemList> lists)
 {
     QList<ListState> listWidgetsStates;
@@ -193,16 +183,11 @@ void MainWindow::on_randomizePushButton_clicked()
     Randomizer r;
     r.setLists(lists);
     QString results = r.start();
-
+    //qDebug() << results;
     ui->plainTextEdit->clear();
     ui->plainTextEdit->setPlainText(results);
 
     ui->randomizePushButton->setText(generateRandomLabelText());
-}
-
-void MainWindow::on_actionClear_triggered()
-{
-    clear();
 }
 
 void MainWindow::on_actionSave_triggered()

@@ -39,8 +39,6 @@ public:
 private slots:
     void on_randomizePushButton_clicked();
 
-    void on_actionClear_triggered();
-
     void on_actionSave_triggered();
 
     void on_actionAdd_List_triggered();
@@ -64,8 +62,6 @@ private:
 
     void initWidgets();
     void openLibrary();
-
-    void clear();
 };
 
 #endif // MAINWINDOW_H

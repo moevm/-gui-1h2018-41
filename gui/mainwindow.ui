@@ -70,7 +70,6 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionAdd_List"/>
     <addaction name="actionRemove_List"/>
@@ -79,7 +78,6 @@
     <property name="title">
      <string>Screen</string>
     </property>
-    <addaction name="actionClear"/>
     <addaction name="actionMenu"/>
    </widget>
    <addaction name="menumenu"/>
@@ -171,16 +169,6 @@
     </layout>
    </widget>
   </widget>
-  <action name="actionOpen">
-   <property name="text">
-    <string>Open</string>
-   </property>
-  </action>
-  <action name="actionClear">
-   <property name="text">
-    <string>Clear</string>
-   </property>
-  </action>
   <action name="actionSave">
    <property name="text">
     <string>Save</string>

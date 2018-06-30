@@ -224,6 +224,8 @@ void MyListWidget::select()
                 qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(selectedItem));
         itemWidget->setSelected(true);
     }
+
+    onItemChanged();
 }
 
 void MyListWidget::unselect()

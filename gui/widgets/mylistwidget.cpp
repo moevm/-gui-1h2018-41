@@ -71,8 +71,6 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
                 m_listWidget = new QListWidget(container);
                 updateWidgets();
                 m_listWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
-                QObject::connect(m_listWidget, SIGNAL(itemPressed(QListWidgetItem*)), this, SLOT(selectItem(QListWidgetItem*)));
-                //QObject::connect(m_listWidget, SIGNAL())
                 listFrame->layout()->addWidget(m_listWidget);
             mainFrame->layout()->addWidget(listFrame);
 
@@ -245,11 +243,4 @@ void MyListWidget::selectItem(QModelIndex index)
     MyListWidgetItem* itemWidget =
             qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(row)));
     itemWidget->setSelected(!itemWidget->selected());
-}
-
-void MyListWidget::selectItem(QListWidgetItem *item)
-{
-    /*MyListWidgetItem* itemWidget =
-            qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(item));
-    itemWidget->setSelected(!itemWidget->selected());*/
 }

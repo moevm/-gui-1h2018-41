@@ -69,8 +69,8 @@ private slots:
     void onTagsEditingFinished();
     void onEditAndSavePressed();
 
-    void selectAll();
-    void unselectAll();
+    void select();
+    void unselect();
 
     void selectItem(QModelIndex index);
     void selectItem(QListWidgetItem* item);

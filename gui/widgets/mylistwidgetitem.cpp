@@ -92,7 +92,6 @@ void MyListWidgetItem::setSelected(bool selected)
 {
     m_selected = selected;
     m_selectedCheckBox->setChecked(m_selected);
-    onItemUpdated();
 }
 
 bool MyListWidgetItem::checked() const

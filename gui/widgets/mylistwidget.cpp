@@ -57,11 +57,11 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
             selectionFrame->setLayout(new QHBoxLayout(selectionFrame));
             selectionFrame->layout()->setContentsMargins(0, 0, 0, 0);
             selectionFrame->layout()->setAlignment(Qt::AlignTop);
-                QPushButton* selectAllButton = new QPushButton("Выбрать все", selectionFrame);
-                QObject::connect(selectAllButton, SIGNAL(clicked(bool)), this, SLOT(selectAll()));
+                QPushButton* selectAllButton = new QPushButton("Выбрать", selectionFrame);
+                QObject::connect(selectAllButton, SIGNAL(clicked(bool)), this, SLOT(select()));
                 selectionFrame->layout()->addWidget(selectAllButton);
-                QPushButton* unSelectAllButton = new QPushButton("Снять все", selectionFrame);
-                QObject::connect(unSelectAllButton, SIGNAL(clicked(bool)), this, SLOT(unselectAll()));
+                QPushButton* unSelectAllButton = new QPushButton("Снять", selectionFrame);
+                QObject::connect(unSelectAllButton, SIGNAL(clicked(bool)), this, SLOT(unselect()));
                 selectionFrame->layout()->addWidget(unSelectAllButton);
             mainFrame->layout()->addWidget(selectionFrame);
 
@@ -72,6 +72,7 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
                 updateWidgets();
                 m_listWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
                 QObject::connect(m_listWidget, SIGNAL(itemPressed(QListWidgetItem*)), this, SLOT(selectItem(QListWidgetItem*)));
+                //QObject::connect(m_listWidget, SIGNAL())
                 listFrame->layout()->addWidget(m_listWidget);
             mainFrame->layout()->addWidget(listFrame);
 
@@ -216,29 +217,25 @@ void MyListWidget::onEditAndSavePressed()
     m_edit = !m_edit;
 }
 
-void MyListWidget::selectAll()
+void MyListWidget::select()
 {
-    if(m_listWidget->count() == m_state.listItems.size())
+    QList<QListWidgetItem*> selectedItems = m_listWidget->selectedItems();
+    for(auto selectedItem : selectedItems)
     {
-        for(int i = 0; i < m_listWidget->count(); i++)
-        {
-            MyListWidgetItem* itemWidget =
-                    qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
-            itemWidget->setSelected(true);
-        }
+        MyListWidgetItem* itemWidget =
+                qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(selectedItem));
+        itemWidget->setSelected(true);
     }
 }
 
-void MyListWidget::unselectAll()
+void MyListWidget::unselect()
 {
-    if(m_listWidget->count() == m_state.listItems.size())
+    QList<QListWidgetItem*> selectedItems = m_listWidget->selectedItems();
+    for(auto selectedItem : selectedItems)
     {
-        for(int i = 0; i < m_listWidget->count(); i++)
-        {
-            MyListWidgetItem* itemWidget =
-                    qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(m_listWidget->item(i)));
-            itemWidget->setSelected(false);
-        }
+        MyListWidgetItem* itemWidget =
+                qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(selectedItem));
+        itemWidget->setSelected(false);
     }
 }
 
@@ -252,7 +249,7 @@ void MyListWidget::selectItem(QModelIndex index)
 
 void MyListWidget::selectItem(QListWidgetItem *item)
 {
-    MyListWidgetItem* itemWidget =
+    /*MyListWidgetItem* itemWidget =
             qobject_cast<MyListWidgetItem*>(m_listWidget->itemWidget(item));
-    itemWidget->setSelected(!itemWidget->selected());
+    itemWidget->setSelected(!itemWidget->selected());*/
 }

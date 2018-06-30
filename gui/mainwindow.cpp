@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -25,6 +27,8 @@ void MainWindow::initWidgets()
     toolbar->addAction(ui->actionAdd_List);
     toolbar->addAction(ui->actionRemove_List);
     //toolbar->addAction(ui->actionClear);
+
+    ui->randomizePushButton->setText(generateRandomLabelText());
 }
 
 void MainWindow::openLibrary()
@@ -119,6 +123,28 @@ QList<RandomItemList> MainWindow::toModelFormat(QList<ListState> listsStates)
     return lists;
 }
 
+QString MainWindow::generateRandomLabelText()
+{
+    QStringList list =
+    {
+        "Узнать будущее",
+        "Сейчас все порешаем",
+        "Снять с себя ответственность",
+        "Да, это бесплатно",
+        "Решайся!",
+        "Еще разок, чтобы наверняка",
+        "Быть или не быть?"
+    };
+
+    int maxIndex = list.size() - 1;
+    int minIndex = 0;
+
+    std::uniform_int_distribution<int> randomIndex(minIndex, maxIndex);
+
+    int index = randomIndex(rng);
+    return list[index];
+}
+
 void MainWindow::on_randomizePushButton_clicked()
 {
     QList<ListState> listsStates;
@@ -148,6 +174,8 @@ void MainWindow::on_randomizePushButton_clicked()
 
     ui->plainTextEdit->clear();
     ui->plainTextEdit->setPlainText(results);
+
+    ui->randomizePushButton->setText(generateRandomLabelText());
 }
 
 void MainWindow::on_actionClear_triggered()

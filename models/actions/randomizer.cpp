@@ -91,8 +91,7 @@ QList<QPair<RandomResults, size_t> > Randomizer::mixListsItems(QList< QPair<Rand
         mixedList.title = list.first.title;
 
         QStringList mixedItems = list.first.items;
-        std::mt19937 g(rd());
-        std::shuffle(mixedItems.begin(), mixedItems.end(), g);
+        std::shuffle(mixedItems.begin(), mixedItems.end(), rng);
 
         mixedList.items = mixedItems;
 

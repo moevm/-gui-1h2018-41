@@ -6,6 +6,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+#include <random>
+
 #include "gui/widgets/mylistwidget.h"
 #include "gui/widgets/mymdisubwindow.h"
 
@@ -31,6 +33,7 @@ public:
     static QList<ListState> toGuiFormat(QList<RandomItemList> lists);
     static ListState toGuiFormat(RandomItemList list);
     static QList<RandomItemList> toModelFormat(QList<ListState> listsStates);
+    static QString generateRandomLabelText();
 
 private slots:
     void on_randomizePushButton_clicked();

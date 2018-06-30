@@ -2,7 +2,8 @@
 
 MyListWidget::MyListWidget(ListState state, QWidget *parent) :
     QWidget(parent),
-    m_state(state)
+    m_state(state),
+    m_edit(false)
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     this->setLayout(mainLayout);

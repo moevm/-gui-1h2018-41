@@ -174,7 +174,7 @@ void MainWindow::on_actionAdd_List_triggered()
     MyMdiSubWindow* w = new MyMdiSubWindow(ui->mdiArea);
     QString objectName = QStringLiteral("MyMdiSubWindow") + QString::number(ui->mdiArea->subWindowList().size());
     w->setObjectName(objectName);
-    QObject::connect(w, SIGNAL(closed(QString)), this, SLOT(onMyMDISubWindowClosed(QString)));
+    QObject::connect(w, SIGNAL(closed(QString)), this, SLOT(onMyMdiSubWindowClosed(QString)));
 
     MyListWidget* myList = new MyListWidget(list, w);
     w->setWidget(myList);
@@ -239,7 +239,7 @@ void MainWindow::on_menuListWidget_itemDoubleClicked(QListWidgetItem *item)
     MyMdiSubWindow* w = new MyMdiSubWindow(ui->mdiArea);
     QString objectName = QStringLiteral("MyMdiSubWindow") + QString::number(ui->mdiArea->subWindowList().size());
     w->setObjectName(objectName);
-    QObject::connect(w, SIGNAL(closed(QString)), this, SLOT(onMyMDISubWindowClosed(QString)));
+    QObject::connect(w, SIGNAL(closed(QString)), this, SLOT(onMyMdiSubWindowClosed(QString)));
 
     MyListWidget* myList = new MyListWidget(list, w);
 
@@ -248,7 +248,7 @@ void MainWindow::on_menuListWidget_itemDoubleClicked(QListWidgetItem *item)
     w->show();
 }
 
-void MainWindow::onMyMDISubWindowClosed(QString objectName)
+void MainWindow::onMyMdiSubWindowClosed(QString objectName)
 {
     QList<QMdiSubWindow*> allWindows = ui->mdiArea->subWindowList();
     for(auto w : allWindows)

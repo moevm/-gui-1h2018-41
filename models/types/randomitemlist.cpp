@@ -67,3 +67,13 @@ void RandomItemList::setNeedToFind(const size_t &needToFind)
 {
     m_needToFind = needToFind;
 }
+
+QStringList RandomItemList::getTags() const
+{
+    return m_tags;
+}
+
+void RandomItemList::setTags(const QStringList &tags)
+{
+    m_tags = tags;
+}

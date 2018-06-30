@@ -34,8 +34,20 @@ MyListWidget::MyListWidget(ListState state, QWidget *parent) :
         m_editAndSavePushButton = new QPushButton("Edit", titleFrame);
         QObject::connect(m_editAndSavePushButton, SIGNAL(clicked(bool)), this, SLOT(onEditAndSavePressed()));
         titleFrame->layout()->addWidget(m_editAndSavePushButton);
-
     container->layout()->addWidget(titleFrame);
+
+    QFrame* tagsFrame = new QFrame(container);
+    tagsFrame->setLayout(new QHBoxLayout(tagsFrame));
+    tagsFrame->layout()->setContentsMargins(0, 0, 0, 0);
+        m_tagsWidget = new QLineEdit(tagsFrame);
+        m_tagsWidget->setEnabled(false);
+        m_tagsWidget->setStyleSheet("border:1px solid #dfdfdf; border-radius: 5px; padding:5px;");
+        m_tagsWidget->setPlaceholderText("Тэги");
+        QObject::connect(m_tagsWidget, SIGNAL(returnPressed()), this, SLOT(onEditAndSavePressed()));
+        tagsFrame->layout()->addWidget(m_tagsWidget);
+    container->layout()->addWidget(tagsFrame);
+
+
         QFrame* mainFrame = new QFrame(container);
         mainFrame->setLayout(new QVBoxLayout(mainFrame));
         mainFrame->layout()->setContentsMargins(0, 0, 0, 0);
@@ -88,6 +100,14 @@ void MyListWidget::updateWidgets()
 
     m_titleWidget->setText(m_state.listName);
     m_needToFindWidget->setText(QString::number(m_state.needToFind));
+
+    QString tags = "";
+    for(auto tag : m_state.tags)
+    {
+        tags += QStringLiteral("+") + tag;
+    }
+    m_tagsWidget->setText(tags);
+
     for(auto item : m_state.listItems)
     {
         QListWidgetItem* listItem = new QListWidgetItem(m_listWidget);
@@ -167,23 +187,30 @@ void MyListWidget::onNeedToFindChanged()
     m_state.needToFind = m_needToFindWidget->text().toUInt();
 }
 
+void MyListWidget::onTagsEditingFinished()
+{
+    m_state.tags = m_tagsWidget->text().split("+");
+}
+
 void MyListWidget::onEditAndSavePressed()
 {
     if(m_edit)
     {
         m_titleWidget->setEnabled(false);
         m_needToFindWidget->setEnabled(false);
+        m_tagsWidget->setEnabled(false);
         m_editAndSavePushButton->setText("Edit");
 
         m_state.needToFind = m_needToFindWidget->text().toUInt();
         m_state.listName = m_titleWidget->text();
+        m_state.tags = m_tagsWidget->text().split("+");
     }
     else
     {
         m_titleWidget->setEnabled(true);
         m_needToFindWidget->setEnabled(true);
+        m_tagsWidget->setEnabled(true);
         m_editAndSavePushButton->setText("Save");
-
     }
     m_edit = !m_edit;
 }

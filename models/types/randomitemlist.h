@@ -21,10 +21,14 @@ public:
     size_t getNeedToFind() const;
     void setNeedToFind(const size_t &needToFind);
 
+    QStringList getTags() const;
+    void setTags(const QStringList &tags);
+
 private:
     QString m_title;
     QList<RandomItem> m_items;
     size_t m_needToFind;
+    QStringList m_tags;
 };
 
 #endif // RANDOMITEMLIST_H

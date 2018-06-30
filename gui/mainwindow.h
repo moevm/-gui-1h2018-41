@@ -49,7 +49,7 @@ private slots:
 
     void on_menuListWidget_itemDoubleClicked(QListWidgetItem *item);
 
-    void onMyMDISubWindowClosed(QString objectName);
+    void onMyMdiSubWindowClosed(QString objectName);
 
 private:
     Ui::MainWindow *ui;

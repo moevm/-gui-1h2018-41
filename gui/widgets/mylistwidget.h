@@ -33,6 +33,7 @@ struct ListState
     QString listName;
     QList<ItemState> listItems;
     size_t needToFind = 1;
+    QStringList tags;
 };
 
 class MyListWidget : public QWidget
@@ -50,6 +51,7 @@ private:
     QLineEdit* m_needToFindWidget;
     QListWidget* m_listWidget;
     QPushButton* m_editAndSavePushButton;
+    QLineEdit* m_tagsWidget;
     bool m_edit;
 
     void updateWidgets();
@@ -64,6 +66,7 @@ private slots:
     void onItemChanged();
     void onTitleChanged();
     void onNeedToFindChanged();
+    void onTagsEditingFinished();
     void onEditAndSavePressed();
 
     void selectAll();
